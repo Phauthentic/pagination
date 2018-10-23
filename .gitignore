@@ -1,0 +1,23 @@
+## Node and Bower Modules
+/node_modules/
+/bower_components
+
+## Development meta files
+.idea/
+.buildpath
+.project
+.settings/
+.DS_Store
+.sass-cache
+atlassian-ide-plugin.xml
+pmip/
+
+## VMs
+.vagrant
+puphpet/*
+
+## Application
+/vendor/*
+/tmp/*
+/logs/*
+/bin

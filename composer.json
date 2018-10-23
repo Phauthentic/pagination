@@ -1,0 +1,27 @@
+{
+    "name": "burzum/pagination",
+    "type": "library",
+    "require": {
+        "psr/http-message": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Florian Krämer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Phauthentic\\Pagination\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Phauthentic\\Pagination\\Test\\": "tests"
+        }
+    }
+}
