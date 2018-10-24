@@ -175,7 +175,7 @@ class PaginationParams implements PaginationParamsInterface
     /**
      * @inheritdoc
      */
-    public function getOffset()
+    public function getOffset(): int
     {
         return ($this->page - 1) * $this->limit;
     }
