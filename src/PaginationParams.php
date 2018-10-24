@@ -154,7 +154,7 @@ class PaginationParams implements PaginationParamsInterface
             ));
         }
 
-        if ($limit > 1) {
+        if ($limit < 1) {
             throw new InvalidArgumentException('Limit must be equal or greater than 1');
         }
 

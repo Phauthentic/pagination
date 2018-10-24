@@ -79,7 +79,7 @@ class PaginationService
      * @param \Psr\Http\Message\ServerRequestInterface $serverRequest Server Request
      * @return \Phauthentic\Pagination\PaginationParamsInterface
      */
-    public function getPagingParams(
+    public function getPagingParamsFromRequest(
         ServerRequestInterface $serverRequest
     ): PaginationParamsInterface {
         return $this->paginationParamsFactory->build($serverRequest);
@@ -101,14 +101,27 @@ class PaginationService
      * @param callable $callable Optional callable to do whatever you want instead of using a mapper
      * @return mixed
      */
-    public function paginate(ServerRequestInterface $request, $repository, ?callable $callable = null)
+    public function paginateFromRequest(ServerRequestInterface $request, $repository, ?callable $callable = null)
     {
-        $params = $this->getPagingParams($request);
+        $params = $this->getPagingParamsFromRequest($request);
 
+        return $this->paginate($params, $repository, $callable);
+    }
+
+    /**
+     * Triggers the pagination on an object
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface
+     * @param mixed $object The object to paginate on
+     * @param callable $callable Optional callable to do whatever you want instead of using a mapper
+     * @return mixed
+     */
+    public function paginate(PaginationParamsInterface $paginationParams, $repository, ?callable $callable = null)
+    {
         if ($callable) {
-            return $callable($repository, $params);
+            return $callable($repository, $paginationParams);
         }
 
-        return $this->paginationToRepositoryMapper->map($params, $repository);
+        return $this->paginationToRepositoryMapper->map($paginationParams, $repository);
     }
 }

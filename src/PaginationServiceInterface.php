@@ -18,7 +18,5 @@ namespace Phauthentic\Pagination;
  */
 interface PaginationServiceInterface
 {
-    public function paginate($object);
 
-    public function getPagingParams();
 }

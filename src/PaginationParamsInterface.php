@@ -19,6 +19,21 @@ namespace Phauthentic\Pagination;
 interface PaginationParamsInterface
 {
     /**
+     * Sets the limit (records per page)
+     *
+     * @param int $limit Limit
+     * @return self
+     */
+    public function setLimit(int $limit): PaginationParamsInterface;
+
+    /**
+     * Gets the limit
+     *
+     * @return int
+     */
+    public function getLimit(): int;
+
+    /**
      * Sets the total count of all records matching the parameters
      *
      * @param int $count Count
