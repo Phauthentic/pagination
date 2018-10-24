@@ -50,10 +50,12 @@ class PaginationParamsTest extends TestCase
             'count' => 0,
             'lastPage' => 1,
             'limit' => 20,
-            'nextPage' => NULL,
-            'previousPage' => NULL,
+            'nextPage' => null,
+            'previousPage' => null,
             'hasNextPage' => false,
             'hasPreviousPage' => false,
+            'direction' => 'asc',
+            'sortBy' => null
         ];
 
         $this->assertEquals($expected, $params->toArray());

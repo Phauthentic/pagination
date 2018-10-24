@@ -18,6 +18,10 @@ namespace Phauthentic\Pagination;
  */
 interface PaginationParamsInterface
 {
+    public function setSortBy(?string $sortBy): PaginationParamsInterface;
+
+    public function getSortBy(): ?string;
+
     /**
      * Sets the limit (records per page)
      *
