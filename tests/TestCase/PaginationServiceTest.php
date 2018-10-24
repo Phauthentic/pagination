@@ -41,10 +41,17 @@ class PaginationServiceTest extends TestCase
                 'direction' => 'asc'
             ]);
 
-        $service = new PaginationService(new PaginationParamsFactory(), new PaginationToCakeOrmMapper());
+        $service = new PaginationService(
+            new PaginationParamsFactory(),
+            new PaginationToCakeOrmMapper()
+        );
 
-        $result = $service->getPagingParams($request);
+        $params = $service->getPagingParamsFromRequest($request);
 
-        var_dump($result);
+        $result = $service->paginate($params, new \stdClass(), function($params, $object) {
+           return [];
+        });
+
+        //var_dump($result);
     }
 }

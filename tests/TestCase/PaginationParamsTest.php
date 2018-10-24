@@ -60,14 +60,51 @@ class PaginationParamsTest extends TestCase
     }
 
     /**
-     * testWithoutValues
+     * testSettingLimitAndCount
      *
      * @return void
      */
-    public function testSettingOtherValues(): void
+    public function testSettingLimitAndCount(): void
     {
         $params = new PaginationParams();
-        $params->setCount(101);
+        $params
+            ->setCount(101)
+            ->setLimit(5);
+
+        $this->assertEquals(1, $params->getPage());
+        $this->assertEquals(21, $params->getPageCount());
+        $this->assertEquals(101, $params->getCount());
+        $this->assertEquals(21, $params->getLastPage());
+
+        $this->assertEquals(2, $params->getNextPage());
+        $this->assertNull($params->getPreviousPage());
+
+        $this->assertTrue($params->hasNextPage());
+        $this->assertFalse($params->hasPreviousPage());
+
+        $params->setPage(5);
+        $this->assertEquals(4, $params->getPreviousPage());
+        $this->assertEquals(6, $params->getNextPage());
+        $this->assertTrue($params->hasNextPage());
+        $this->assertTrue($params->hasPreviousPage());
+
+        $params->setPage(6);
+        $this->assertEquals(5, $params->getPreviousPage());
+        $this->assertEquals(7, $params->getNextPage());
+        $this->assertTrue($params->hasNextPage());
+        $this->assertTrue($params->hasPreviousPage());
+    }
+
+    /**
+     * testSettingCount
+     *
+     * @return void
+     */
+    public function testSettingCount(): void
+    {
+        $params = new PaginationParams();
+        $params
+            ->setCount(101);
 
         $this->assertEquals(1, $params->getPage());
         $this->assertEquals(6, $params->getPageCount());
