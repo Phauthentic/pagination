@@ -1,5 +1,5 @@
 {
-    "name": "burzum/pagination",
+    "name": "Phauthentic/pagination",
     "type": "library",
     "require": {
         "psr/http-message": "^1.0"
