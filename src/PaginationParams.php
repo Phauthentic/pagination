@@ -134,7 +134,7 @@ class PaginationParams implements PaginationParamsInterface
     public function setMaxLimit(int $maxLimit): PaginationParamsInterface
     {
         if ($maxLimit < 2) {
-            throw new InvalidArgumentException('Page value must be greater than 1');
+            throw new InvalidArgumentException('Max limit value must be greater than one');
         }
 
         $this->maxLimit = $maxLimit;

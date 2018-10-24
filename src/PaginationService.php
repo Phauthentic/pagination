@@ -85,6 +85,13 @@ class PaginationService
         return $this->paginationParamsFactory->build($serverRequest);
     }
 
+    /**
+     * Sets the pagination data to a request attribute
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $serverRequest Server Request
+     * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Pagination Params
+     * @return \Psr\Http\Message\ServerRequestInterface
+     */
     public function setPagingRequestAttribute(
         ServerRequestInterface $serverRequest,
         PaginationParamsInterface $paginationParams,

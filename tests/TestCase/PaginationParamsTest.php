@@ -129,4 +129,48 @@ class PaginationParamsTest extends TestCase
         $this->assertFalse($params->hasNextPage());
         $this->assertTrue($params->hasPreviousPage());
     }
+
+    /**
+     * testSetInvalidPage
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSetInvalidPage()
+    {
+        $params = new PaginationParams();
+        $params->setPage(0);
+    }
+
+    /**
+     * testInvalidLargeLimit
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSetInvalidMaxLimit()
+    {
+        $params = new PaginationParams();
+        $params->setMaxLimit(1);
+    }
+
+    /**
+     * testInvalidSmallLimit
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInvalidSmallLimit()
+    {
+        $params = new PaginationParams();
+        $params->setLimit(-1);
+    }
+
+    /**
+     * testInvalidLargeLimit
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInvalidLargeLimit()
+    {
+        $params = new PaginationParams();
+        $params->setLimit(1000000);
+    }
 }
