@@ -1,20 +1,20 @@
 <?php
 /**
- * FLAPP! - The frameworkless App
- * Copyright (c) Florian Krämer
+ * Copyright (c) Phauthentic (https://github.com/Phauthentic)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Florian Krämer
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @copyright     Copyright (c) Phauthentic (https://github.com/Phauthentic)
+ * @link          https://github.com/Phauthentic
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 declare(strict_types = 1);
 
 namespace Phauthentic\Pagination;
 
+use Cake\Datasource\RepositoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -28,8 +28,17 @@ class PaginationToCakeOrmMapper implements PaginationToRepositoryMapperInterface
      * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Pagination params
      * @param mixed $repository
      */
-    public function map(PaginationParams $paginationParams, $repository) {
-        return $repository
+    public function map(PaginationParamsInterface $paginationParams, $object) {
+        $query = null;
+        if ($object instanceof QueryInterface) {
+            $query = $object;
+            $object = $query->getRepository();
+        }
+
+        $count = $query->count();
+        $paginationParams->setCount($count);
+
+        return $query
             ->limit($paginationParams->getLimit())
             ->offSet($paginationParams->getOffset());
     }

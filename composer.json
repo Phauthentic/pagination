@@ -5,7 +5,8 @@
         "psr/http-message": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^7.5",
+        "cakephp/orm": "dev-master"
     },
     "license": "MIT",
     "authors": [
