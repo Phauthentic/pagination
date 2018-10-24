@@ -31,6 +31,7 @@ class CakeOrmAdapter implements PaginationAdapterInterface
      */
     public function paginate(PaginationParamsInterface $paginationParams, $object)
     {
+        /** @var \Cake\Database\Query $query */
         $query = null;
         if ($object instanceof QueryInterface) {
             $query = $object;
@@ -39,6 +40,18 @@ class CakeOrmAdapter implements PaginationAdapterInterface
 
         $count = $query->count();
         $paginationParams->setCount($count);
+
+        $sortBy = $paginationParams->getSortBy();
+        if ($sortBy !== null) {
+            if (strpos($sortBy, '.') === false) {
+                $sortBy = $object->aliasField($sortBy);
+            }
+            if ($paginationParams->getDirection() === 'desc') {
+                $query->orderDesc($sortBy);
+            } else {
+                $query->orderAsc($sortBy);
+            }
+        }
 
         return $query
             ->limit($paginationParams->getLimit())

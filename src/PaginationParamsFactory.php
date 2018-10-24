@@ -26,7 +26,8 @@ class PaginationParamsFactory implements PaginationParamsFactoryInterface {
     protected $map = [
         'limit' => 'limit',
         'page' => 'page',
-        'direction' => 'direction'
+        'direction' => 'direction',
+        'sortBy' => 'sort'
     ];
 
     public function getPage(array $params, string $name = 'page'): int
@@ -45,6 +46,15 @@ class PaginationParamsFactory implements PaginationParamsFactoryInterface {
         }
 
         return 20;
+    }
+
+    public function getSortBy(array $params, string $name = 'sort'): string
+    {
+        if (!empty($params[$name])) {
+            return (string)$params[$name];
+        }
+
+        return null;
     }
 
     public function getDirection(array $params, string $name = 'direction'): string
@@ -79,9 +89,10 @@ class PaginationParamsFactory implements PaginationParamsFactoryInterface {
             $setterMethod = 'set' . $setter;
             $getterMethod = 'get' . $setter;
 
-            if (is_callable($value)) {
+            if (!is_string($value) && is_callable($value)) {
                 $value = $value($request);
             }
+
             if (isset($queryParams[$value])) {
                 $params->{$setterMethod}($this->{$getterMethod}($queryParams, $value));
             }

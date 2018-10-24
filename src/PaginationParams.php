@@ -44,7 +44,7 @@ class PaginationParams implements PaginationParamsInterface
     /**
      * @var string|null
      */
-    protected $sort = null;
+    protected $sortBy = null;
 
     /**
      * @var int
@@ -112,6 +112,18 @@ class PaginationParams implements PaginationParamsInterface
     public function getDirection(): string
     {
         return $this->direction;
+    }
+
+    public function setSortBy(?string $sortBy): PaginationParamsInterface
+    {
+        $this->sortBy = $sortBy;
+
+        return $this;
+    }
+
+    public function getSortBy(): ?string
+    {
+        return $this->sortBy;
     }
 
     /**
@@ -258,6 +270,8 @@ class PaginationParams implements PaginationParamsInterface
             'count' => $this->count,
             'lastPage' => $this->getLastPage(),
             'limit' => $this->limit,
+            'direction' => $this->direction,
+            'sortBy' => $this->sortBy,
             'nextPage' => $this->getNextPage(),
             'previousPage' => $this->getPreviousPage(),
             'hasNextPage' => $this->hasNextPage(),
