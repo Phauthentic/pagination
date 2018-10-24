@@ -42,7 +42,7 @@ class PaginationToCakeOrmMapper implements PaginationToRepositoryMapperInterface
 
         return $query
             ->limit($paginationParams->getLimit())
-            ->offSet($paginationParams->getOffset())
+            ->offSet($paginationParams->getOffSet())
             ->all();
     }
 }

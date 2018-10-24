@@ -46,6 +46,7 @@ class PaginationService
         PaginationToRepositoryMapperInterface $paginationToRepositoryMapper
     ) {
         $this->paginationParamsFactory = $paginationParamsFactory;
+        $this->paginationToRepositoryMapper = $paginationToRepositoryMapper;
     }
 
     /**
@@ -102,7 +103,7 @@ class PaginationService
      */
     public function paginate(ServerRequestInterface $request, $repository, ?callable $callable = null)
     {
-        $params = $this->getPaginationParams($request);
+        $params = $this->getPagingParams($request);
 
         if ($callable) {
             return $callable($repository, $params);

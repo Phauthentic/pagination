@@ -49,6 +49,13 @@ interface PaginationParamsInterface
     public function getPage(): int;
 
     /**
+     * Gets the actual offset value
+     *
+     * @return int
+     */
+    public function getOffset(): int;
+
+    /**
      * Sets the direction of ordering
      */
     public function setDirection(string $direction): self;
