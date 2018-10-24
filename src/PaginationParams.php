@@ -16,7 +16,7 @@ namespace Phauthentic\Pagination;
 use InvalidArgumentException;
 
 /**
- * Pagination Data Transfer Object
+ * Pagination Data Object
  */
 class PaginationParams implements PaginationParamsInterface
 {

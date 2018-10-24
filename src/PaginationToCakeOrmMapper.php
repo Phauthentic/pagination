@@ -14,7 +14,7 @@ declare(strict_types = 1);
 
 namespace Phauthentic\Pagination;
 
-use Cake\Datasource\RepositoryInterface;
+use Cake\Datasource\QueryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -27,8 +27,10 @@ class PaginationToCakeOrmMapper implements PaginationToRepositoryMapperInterface
      *
      * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Pagination params
      * @param mixed $repository
+     * @return mixed
      */
-    public function map(PaginationParamsInterface $paginationParams, $object) {
+    public function map(PaginationParamsInterface $paginationParams, $object)
+    {
         $query = null;
         if ($object instanceof QueryInterface) {
             $query = $object;
@@ -40,6 +42,7 @@ class PaginationToCakeOrmMapper implements PaginationToRepositoryMapperInterface
 
         return $query
             ->limit($paginationParams->getLimit())
-            ->offSet($paginationParams->getOffset());
+            ->offSet($paginationParams->getOffset())
+            ->all();
     }
 }

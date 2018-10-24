@@ -29,7 +29,7 @@ class PaginationToDoctrineMapper implements PaginationToRepositoryMapperInterfac
      * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Pagination params
      * @param mixed $repository
      */
-    public function map(PaginationParams $paginationParams, $repository) {
+    public function map(PaginationParamsInterface $paginationParams, $repository) {
         $query = $repository
            ->setFirstResult($paginationParams->getCurrentPage())
            ->setMaxResults($paginationParams->getLimit());
