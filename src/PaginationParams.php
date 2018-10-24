@@ -29,51 +29,122 @@ class PaginationParams implements PaginationParamsInterface
      */
     protected $direction = 'asc';
 
+    /**
+     * The limit per page, or records per page
+     *
+     * @var int
+     */
     protected $limit = 20;
 
+    /**
+     * @var int
+     */
     protected $maxLimit = 200;
 
+    /**
+     * @var string|null
+     */
     protected $sort = null;
 
+    /**
+     * @var int
+     */
     protected $page = 1;
 
+    /**
+     * @var int
+     */
     protected $pageCount = 1;
 
+    /**
+     * @var int
+     */
     protected $count = 0;
 
+    /**
+     * @inheritDoc
+     */
     public function getCount(): int
     {
         return $this->count;
     }
 
+    /**
+     * @inheritDoc
+     */
+    protected function calculatePageCount()
+    {
+        $count = $this->count / $this->limit;
+
+        if ((int)$count === 0) {
+            $count = 1;
+        } else {
+            $count = (int)ceil($count);
+        }
+
+        $this->pageCount = $count;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function setCount(int $count): PaginationParamsInterface
     {
         $this->count = $count;
+        $this->calculatePageCount();
 
         return $this;
     }
 
-    public function setDirection(string $direction)
+    /**
+     * @inheritDoc
+     */
+    public function setDirection(string $direction): PaginationParamsInterface
     {
         $this->direction = $direction;
 
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function getDirection(): string
+    {
+        return $this->direction;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function setPage(int $page): PaginationParamsInterface
     {
+        if ($page === 0) {
+            throw new InvalidArgumentException('Page value must be greater than zero');
+        }
+
         $this->page = $page;
 
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setMaxLimit(int $maxLimit): PaginationParamsInterface
     {
+        if ($maxLimit < 2) {
+            throw new InvalidArgumentException('Page value must be greater than 1');
+        }
+
         $this->maxLimit = $maxLimit;
 
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setLimit(int $limit): PaginationParamsInterface
     {
         if ($limit > $this->maxLimit) {
@@ -83,38 +154,106 @@ class PaginationParams implements PaginationParamsInterface
             ));
         }
 
+        if ($limit > 1) {
+            throw new InvalidArgumentException('Limit must be equal or greater than 1');
+        }
+
         $this->limit = $limit;
+        $this->calculatePageCount();
 
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getLimit(): int
     {
         return $this->limit;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getPage(): int
     {
         return $this->page;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function getPageCount()
+    {
+        $this->calculatePageCount();
+
+        return $this->pageCount;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getLastPage(): int
+    {
+        return $this->pageCount;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getNextPage(): ?int
     {
+        if ($this->page < $this->getPageCount()) {
+            return $this->page + 1;
+        }
 
+        return null;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getPreviousPage(): ?int
     {
+        if ($this->page > 1) {
+            return $this->page - 1;
+        }
 
+        return null;
     }
 
-    public function hasPreviousPage(): ?bool
+    /**
+     * @inheritDoc
+     */
+    public function hasPreviousPage(): bool
     {
         return $this->getPreviousPage() !== null;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function hasNextPage(): bool
     {
         return $this->getNextPage() !== null;
+    }
+
+    /**
+     * Returns the current state of the object as array
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'page' => $this->page,
+            'count' => $this->count,
+            'lastPage' => $this->getLastPage(),
+            'limit' => $this->limit,
+            'nextPage' => $this->getNextPage(),
+            'previousPage' => $this->getPreviousPage(),
+            'hasNextPage' => $this->hasNextPage(),
+            'hasPreviousPage' => $this->hasPreviousPage()
+        ];
     }
 }

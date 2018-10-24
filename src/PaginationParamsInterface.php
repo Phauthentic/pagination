@@ -47,4 +47,44 @@ interface PaginationParamsInterface
      * @return int
      */
     public function getPage(): int;
+
+    /**
+     * Sets the direction of ordering
+     */
+    public function setDirection(string $direction): self;
+
+    /**
+     * Gets the direction of ordering
+     *
+     * @return string
+     */
+    public function getDirection(): string;
+
+    /**
+     * Sets the maximum allowed limit value
+     *
+     * @param int $maxLimit Max allowed limit value
+     * @return $this
+     */
+    public function setMaxLimit(int $maxLimit): PaginationParamsInterface;
+
+    /**
+     * @return null|int
+     */
+    public function getNextPage(): ?int;
+
+    /**
+     * @return null|int
+     */
+    public function getPreviousPage(): ?int;
+
+    /**
+     * @return bool
+     */
+    public function hasPreviousPage(): bool;
+
+    /**
+     * @return bool
+     */
+    public function hasNextPage(): bool;
 }

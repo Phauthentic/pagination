@@ -1,8 +1,8 @@
 # Framework agnostic Pagination
 
-This library is a framework agnostic way of paginating through data sets. The only dependency is psr/http-message.
+This library is a framework agnostic way of paginating through data sets. The only dependency is [psr/http-message](https://github.com/php-fig/http-message).
 
-It gets the information from the request and turns it into a data transfer object that is passed to a mapper that will map it to the data layer implementation.
+It gets the information from the request object that must comply to [the PSR-7 standard](https://www.php-fig.org/psr/psr-7/) and turns it into a [data transfer object](https://en.wikipedia.org/wiki/Data_transfer_object) that is passed to a mapper that will map it to the data layer implementation.
  
 **This is work on progress! Don't use it yet!**
 
@@ -16,9 +16,9 @@ $service = new PaginationService(
 );
 
 // Get the pagination data transfer object
-$paginationParams = $service->getPaginationParams($request);
+$paginationParams = $service->getPagingParams($request);
 
-// Calls getPaginationParams() internally and passes it to the mapper
+// Calls getPagingParams() internally and passes it to the mapper
 $resultSet = $service->paginate(
     $request,
     $myRepositoryObject

@@ -21,3 +21,4 @@ puphpet/*
 /tmp/*
 /logs/*
 /bin
+/coverage.xml
