@@ -14,26 +14,35 @@ declare(strict_types = 1);
 
 namespace Phauthentic\Pagination;
 
+use Cake\Datasource\QueryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * PaginationToDoctrineRepositoryMapper
- *
- * @link https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/tutorials/pagination.html
+ * Pagination To Cake Orm Mapper
  */
-class PaginationToDoctrineMapper implements PaginationToRepositoryMapperInterface
+class CakeOrmAdapter implements PaginationAdapterInterface
 {
     /**
      * Maps the params to the repository
      *
      * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Pagination params
      * @param mixed $repository
+     * @return mixed
      */
-    public function map(PaginationParamsInterface $paginationParams, $repository) {
-        $query = $repository
-           ->setFirstResult($paginationParams->getCurrentPage())
-           ->setMaxResults($paginationParams->getLimit());
+    public function paginate(PaginationParamsInterface $paginationParams, $object)
+    {
+        $query = null;
+        if ($object instanceof QueryInterface) {
+            $query = $object;
+            $object = $query->getRepository();
+        }
 
-        return new Paginator($query, $fetchJoinCollection = true);
+        $count = $query->count();
+        $paginationParams->setCount($count);
+
+        return $query
+            ->limit($paginationParams->getLimit())
+            ->offSet($paginationParams->getOffSet())
+            ->all();
     }
 }

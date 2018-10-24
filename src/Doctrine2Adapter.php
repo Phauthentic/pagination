@@ -13,10 +13,14 @@ declare(strict_types = 1);
  */
 namespace Phauthentic\Pagination;
 
+use Psr\Http\Message\ServerRequestInterface;
+
 /**
- * PaginationParamsFactoryInterface
+ * PaginationToDoctrineRepositoryMapper
+ *
+ * @link https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/tutorials/pagination.html
  */
-interface PaginationToRepositoryMapperInterface
+class Doctrine2Adapter implements PaginationAdapterInterface
 {
     /**
      * Maps the params to the repository
@@ -24,5 +28,12 @@ interface PaginationToRepositoryMapperInterface
      * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Pagination params
      * @param mixed $repository
      */
-    public function map(PaginationParamsInterface $paginationParams, $repository);
+    public function paginate(PaginationParamsInterface $paginationParams, $repository)
+    {
+        $query = $repository
+           ->setFirstResult($paginationParams->getCurrentPage())
+           ->setMaxResults($paginationParams->getLimit());
+
+        return new Paginator($query, $fetchJoinCollection = true);
+    }
 }

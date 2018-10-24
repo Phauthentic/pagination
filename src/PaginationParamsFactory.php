@@ -57,11 +57,16 @@ class PaginationParamsFactory implements PaginationParamsFactoryInterface {
     }
 
     /**
+     * Sets the query param mapping
      *
+     * @param array $map Query param map
+     * @return \Phauthentic\Pagination\PaginationParamsFactoryInterface
      */
-    public function setQueryParamMapping(array $map): self
+    public function setQueryParamMapping(array $map = []): PaginationParamsFactoryInterface
     {
-        $this->map = $map;
+        $this->map = array_merge($this->map, $map);
+
+        return $this;
     }
 
     protected function mapRequest(ServerRequestInterface $request)

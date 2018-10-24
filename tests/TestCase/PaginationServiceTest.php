@@ -13,6 +13,7 @@ declare(strict_types = 1);
  */
 namespace Phauthentic\Pagination\Test\TestCase;
 
+use Phauthentic\Pagination\CakeOrmAdapter;
 use Phauthentic\Pagination\PaginationParamsFactory;
 use Phauthentic\Pagination\PaginationService;
 use Phauthentic\Pagination\PaginationToCakeOrmMapper;
@@ -43,7 +44,7 @@ class PaginationServiceTest extends TestCase
 
         $service = new PaginationService(
             new PaginationParamsFactory(),
-            new PaginationToCakeOrmMapper()
+            new CakeOrmAdapter()
         );
 
         $params = $service->getPagingParamsFromRequest($request);

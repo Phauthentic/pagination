@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 /**
  * Copyright (c) Phauthentic (https://github.com/Phauthentic)
  *
@@ -10,8 +11,6 @@
  * @link          https://github.com/Phauthentic
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
-declare(strict_types = 1);
-
 namespace Phauthentic\Pagination;
 
 use Psr\Http\Message\ServerRequestInterface;
@@ -34,19 +33,19 @@ class PaginationService
     /**
      * Pagination to data layer implementation mapper
      *
-     * @var \Phauthentic\Pagination\PaginationToRepositoryMapperInterface
+     * @var \Phauthentic\Pagination\PaginationAdapterInterface
      */
-    protected $paginationToRepositoryMapper;
+    protected $adapter;
 
     /**
      * Constructor
      */
     public function __construct(
         PaginationParamsFactory $paginationParamsFactory,
-        PaginationToRepositoryMapperInterface $paginationToRepositoryMapper
+        PaginationAdapterInterface $paginationAdapter
     ) {
         $this->paginationParamsFactory = $paginationParamsFactory;
-        $this->paginationToRepositoryMapper = $paginationToRepositoryMapper;
+        $this->adapter = $paginationAdapter;
     }
 
     /**
@@ -54,9 +53,9 @@ class PaginationService
      *
      * @return $this
      */
-    public function setPaginationToRepositoryMapper(PaginationToRepositoryMapperInterface $mapper): self
+    public function setPaginationAdapter(PaginationAdapterInterface $adapter): self
     {
-        $this->paginationToRepositoryMapper = $mapper;
+        $this->adapter = $adapter;
 
         return $this;
     }
@@ -129,6 +128,6 @@ class PaginationService
             return $callable($repository, $paginationParams);
         }
 
-        return $this->paginationToRepositoryMapper->map($paginationParams, $repository);
+        return $this->adapter->paginate($paginationParams, $repository);
     }
 }

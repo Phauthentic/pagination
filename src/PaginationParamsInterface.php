@@ -91,21 +91,28 @@ interface PaginationParamsInterface
     public function setMaxLimit(int $maxLimit): PaginationParamsInterface;
 
     /**
+     * Gets the next page number
+     *
      * @return null|int
      */
     public function getNextPage(): ?int;
 
     /**
+     * Gets the previous page number
+     *
      * @return null|int
      */
     public function getPreviousPage(): ?int;
 
     /**
+     * Checks if a previous page exists
+     *
      * @return bool
      */
     public function hasPreviousPage(): bool;
 
     /**
+     * Checks if the next page exists
      * @return bool
      */
     public function hasNextPage(): bool;
