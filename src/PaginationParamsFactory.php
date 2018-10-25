@@ -48,7 +48,7 @@ class PaginationParamsFactory implements PaginationParamsFactoryInterface {
         return 20;
     }
 
-    public function getSortBy(array $params, string $name = 'sort'): string
+    public function getSortBy(array $params, string $name = 'sort'): ?string
     {
         if (!empty($params[$name])) {
             return (string)$params[$name];

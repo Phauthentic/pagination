@@ -14,9 +14,6 @@ declare(strict_types = 1);
 
 namespace Phauthentic\Pagination;
 
-use Cake\Datasource\QueryInterface;
-use Psr\Http\Message\ServerRequestInterface;
-
 /**
  * Paginates arrays
  */

@@ -96,7 +96,7 @@ class PaginationService
         PaginationParamsInterface $paginationParams,
         string $attributeName = 'paging'
     ): ServerRequestInterface {
-        return $serverRequest->setAttribute($attributeName, $paginationParams);
+        return $serverRequest->withAttribute($attributeName, $paginationParams);
     }
 
     /**
