@@ -203,7 +203,7 @@ class PaginationParams implements PaginationParamsInterface
     /**
      * @inheritDoc
      */
-    public function getPageCount()
+    public function getPageCount(): int
     {
         $this->calculatePageCount();
 

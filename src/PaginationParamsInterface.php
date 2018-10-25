@@ -43,7 +43,7 @@ interface PaginationParamsInterface
      * @param int $count Count
      * @return $this
      */
-    public function setCount(int $count): self;
+    public function setCount(int $count): PaginationParamsInterface;
 
     /**
      * Gets the total count of all records
@@ -58,7 +58,7 @@ interface PaginationParamsInterface
      * @param int $page Page
      * @return self
      */
-    public function setPage(int $page): self;
+    public function setPage(int $page): PaginationParamsInterface;
 
     /**
      * Gets the current page number
@@ -66,6 +66,13 @@ interface PaginationParamsInterface
      * @return int
      */
     public function getPage(): int;
+
+    /**
+     * Gets the page count
+     *
+     * @return int
+     */
+    public function getPageCount(): int;
 
     /**
      * Gets the actual offset value
@@ -77,7 +84,7 @@ interface PaginationParamsInterface
     /**
      * Sets the direction of ordering
      */
-    public function setDirection(string $direction): self;
+    public function setDirection(string $direction): PaginationParamsInterface;
 
     /**
      * Gets the direction of ordering
