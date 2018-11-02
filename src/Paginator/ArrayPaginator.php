@@ -15,6 +15,7 @@ declare(strict_types = 1);
 namespace Phauthentic\Pagination\Paginator;
 
 use Phauthentic\Pagination\PaginationParams;
+use Phauthentic\Pagination\PaginationParamsInterface;
 
 /**
  * Paginates arrays
@@ -35,7 +36,7 @@ class ArrayPaginator implements PaginatorInterface
      * @param array $array
      * @return array
      */
-    public function paginate(PaginationParamsInterface $paginationParams, $array)
+    public function paginate($array, PaginationParamsInterface $paginationParams)
     {
         $paginationParams->setCount(count($array));
 

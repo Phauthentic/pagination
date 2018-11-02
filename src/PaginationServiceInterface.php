@@ -18,5 +18,13 @@ namespace Phauthentic\Pagination;
  */
 interface PaginationServiceInterface
 {
-
+    /**
+     * Triggers the pagination
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface
+     * @param mixed $repository The repository / array / collection to paginate
+     * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Paging Params
+     * @return mixed
+     */
+    public function paginate($repository, PaginationParamsInterface $paginationParams);
 }

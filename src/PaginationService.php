@@ -86,10 +86,10 @@ class PaginationService
      */
     public function paginate($repository, PaginationParamsInterface $paginationParams)
     {
-        if (empty($paginationParams)) {
+        if ($paginationParams === null) {
             $paginationParams = $this->paginationParamsFactory->build($repository);
         }
 
-        return $this->paginator->paginate($paginationParams, $repository);
+        return $this->paginator->paginate($repository, $paginationParams);
     }
 }

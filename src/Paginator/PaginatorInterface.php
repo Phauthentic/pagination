@@ -13,6 +13,8 @@ declare(strict_types = 1);
  */
 namespace Phauthentic\Pagination\Paginator;
 
+use Phauthentic\Pagination\PaginationParamsInterface;
+
 /**
  * Pagination Adapter Interface
  */
@@ -24,5 +26,5 @@ interface PaginatorInterface
      * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Pagination params
      * @param mixed $repository
      */
-    public function paginate(PaginationParamsInterface $paginationParams, $repository);
+    public function paginate($repository, PaginationParamsInterface $paginationParams);
 }
