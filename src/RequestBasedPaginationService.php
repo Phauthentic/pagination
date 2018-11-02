@@ -50,19 +50,4 @@ class RequestBasedPaginationService extends PaginationService
     ): ServerRequestInterface {
         return $serverRequest->withAttribute($attributeName, $paginationParams);
     }
-
-    /**
-     * Triggers the pagination on an object
-     *
-     * @param \Psr\Http\Message\ServerRequestInterface
-     * @param callable $callable Optional callable to do whatever you want instead of using a mapper
-     * @param mixed $repository The repository to paginate
-     * @return mixed
-     */
-    public function paginateFromRequest($repository, ServerRequestInterface $request)
-    {
-        $params = $this->getPagingParamsFromRequest($request);
-
-        return $this->paginate($repository, $params);
-    }
 }

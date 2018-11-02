@@ -13,10 +13,30 @@ declare(strict_types = 1);
  */
 namespace Phauthentic\Pagination\Test\TestCase\ParamsFactory;
 
+use Phauthentic\Pagination\PaginationParams;
+use Phauthentic\Pagination\PaginationParamsInterface;
+use Phauthentic\Pagination\ServerRequestQueryParamsFactory;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * ServerRequestQueryParamsFactoryTest
  */
 class ServerRequestQueryParamsFactoryTest extends TestCase {
+
+    /**
+     * testBuild
+     *
+     * @return void
+     */
+    public function testBuild(): void
+    {
+        $requestMock = $this->getMockBuilder(ServerRequestInterface::class)
+            ->getMock();
+
+        $factory = new ServerRequestQueryParamsFactory();
+        $result = $factory->build($requestMock);
+
+        $this->assertInstanceOf(PaginationParamsInterface::class, $result);
+    }
 }

@@ -76,19 +76,19 @@ class PaginationService
     }
 
     /**
-     * Triggers the pagination on an object
+     * Triggers the pagination
      *
      * @param \Psr\Http\Message\ServerRequestInterface
-     * @param mixed $object The data to paginate on
-     * @param callable $callable Optional callable to do whatever you want instead of using a mapper
+     * @param mixed $repository The repository / array / collection to paginate
+     * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Paging Params
      * @return mixed
      */
-    public function paginate($object, PaginationParamsInterface $paginationParams)
+    public function paginate($repository, PaginationParamsInterface $paginationParams)
     {
         if (empty($paginationParams)) {
-            $paginationParams = $this->paginationParamsFactory->build($object);
+            $paginationParams = $this->paginationParamsFactory->build($repository);
         }
 
-        return $this->paginator->paginate($paginationParams, $object);
+        return $this->paginator->paginate($paginationParams, $repository);
     }
 }
