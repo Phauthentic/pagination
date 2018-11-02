@@ -11,8 +11,9 @@ declare(strict_types = 1);
  * @link          https://github.com/Phauthentic
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Phauthentic\Pagination;
+namespace Phauthentic\Pagination\ParamsFactory;
 
+use Phauthentic\Pagination\PaginationParams;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
