@@ -12,12 +12,12 @@
  */
 declare(strict_types = 1);
 
-namespace Phauthentic\Pagination;
+namespace Phauthentic\Pagination\Paginator;
 
 /**
  * Paginates arrays
  */
-class ArrayPaginatorAdapter implements PaginationAdapterInterface
+class ArrayPaginator implements PaginatorInterface
 {
     /**
      * Maps the params to the repository
@@ -49,4 +49,5 @@ class ArrayPaginatorAdapter implements PaginationAdapterInterface
 
         return $data;
     }
+
 }

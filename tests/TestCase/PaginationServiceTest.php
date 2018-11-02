@@ -14,8 +14,8 @@ declare(strict_types = 1);
 namespace Phauthentic\Pagination\Test\TestCase;
 
 use Phauthentic\Pagination\CakeOrmAdapter;
-use Phauthentic\Pagination\PaginationParamsFactory;
-use Phauthentic\Pagination\PaginationService;
+use Phauthentic\Pagination\ServerRequestQueryParamsFactory;
+use Phauthentic\Pagination\RequestBasedPaginationService;
 use Phauthentic\Pagination\PaginationToCakeOrmMapper;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
@@ -42,8 +42,8 @@ class PaginationServiceTest extends TestCase
                 'direction' => 'asc'
             ]);
 
-        $service = new PaginationService(
-            new PaginationParamsFactory(),
+        $service = new RequestBasedPaginationService(
+            new ServerRequestQueryParamsFactory(),
             new CakeOrmAdapter()
         );
 

@@ -13,7 +13,7 @@ declare(strict_types = 1);
  */
 namespace Phauthentic\Pagination\Test\TestCase;
 
-use Phauthentic\Pagination\PaginationParamsFactory;
+use Phauthentic\Pagination\ServerRequestQueryParamsFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -39,7 +39,7 @@ class PaginationParamsFactoryTest extends TestCase
                 'direction' => 'desc'
             ]);
 
-        $factory = new PaginationParamsFactory();
+        $factory = new ServerRequestQueryParamsFactory();
         $result = $factory->build($mockRequest);
 
         //var_export($result->toArray());

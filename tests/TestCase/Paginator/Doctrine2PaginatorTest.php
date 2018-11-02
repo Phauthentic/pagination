@@ -11,17 +11,25 @@ declare(strict_types = 1);
  * @link          https://github.com/Phauthentic
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Phauthentic\Pagination;
+namespace Phauthentic\Pagination\Test\TestCase\Paginator;
 
-use Psr\Http\Message\ServerRequestInterface;
+use Phauthentic\Pagination\PaginationParams;
+use Phauthentic\Pagination\ServerRequestQueryParamsFactory;
+use Phauthentic\Pagination\RequestBasedPaginationService;
+use PHPUnit\Framework\TestCase;
 
 /**
- * Pagination Service Interface
+ * Doctrine 2 Adapter
  */
-interface PaginationParamsFactoryInterface
+class Doctrine2PaginatorTest extends TestCase
 {
     /**
+     * testPaginate
      *
+     * @return void
      */
-    public function build(ServerRequestInterface $request): PaginationParamsInterface;
+    public function testPaginate(): void
+    {
+
+    }
 }

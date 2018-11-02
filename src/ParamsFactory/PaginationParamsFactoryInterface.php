@@ -13,16 +13,18 @@ declare(strict_types = 1);
  */
 namespace Phauthentic\Pagination;
 
+use Psr\Http\Message\ServerRequestInterface;
+
 /**
- * Pagination Adapter Interface
+ * Pagination Service Interface
  */
-interface PaginationAdapterInterface
+interface PaginationParamsFactoryInterface
 {
     /**
-     * Maps the params to the repository
+     * Builds the pagination parameters
      *
-     * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Pagination params
-     * @param mixed $repository
+     * @param mixed $data Data from which the factory will generate the params
+     * @return \Phauthentic\Pagination\PaginationParamsInterface
      */
-    public function paginate(PaginationParamsInterface $paginationParams, $repository);
+    public function build($data): PaginationParamsInterface;
 }

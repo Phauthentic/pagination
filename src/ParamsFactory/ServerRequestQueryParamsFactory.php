@@ -16,11 +16,13 @@ namespace Phauthentic\Pagination;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Pagination Service Interface
+ * Extracts the pagination information from a server requests query string
  */
-class PaginationParamsFactory implements PaginationParamsFactoryInterface {
+class ServerRequestQueryParamsFactory extends AbstractFactory {
 
     /**
+     * Parameter map
+     *
      * @var array
      */
     protected $map = [
@@ -83,7 +85,7 @@ class PaginationParamsFactory implements PaginationParamsFactoryInterface {
     {
         $queryParams = $request->getQueryParams();
 
-        $params = new PaginationParams();
+        $params = new static::$paginationParamsClass();
 
         foreach ($this->map as $setter => $value) {
             $setterMethod = 'set' . $setter;
@@ -104,8 +106,12 @@ class PaginationParamsFactory implements PaginationParamsFactoryInterface {
     /**
      * @inheritDoc
      */
-    public function build(ServerRequestInterface $request): PaginationParamsInterface
+    public function build($data): PaginationParamsInterface
     {
-        return $this->mapRequest($request);
+        if (!$data instanceof ServerRequestInterface) {
+           return new static::$paginationParamsClass();
+        }
+
+        return $this->mapRequest($data);
     }
 }

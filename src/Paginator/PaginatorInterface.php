@@ -11,16 +11,12 @@ declare(strict_types = 1);
  * @link          https://github.com/Phauthentic
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Phauthentic\Pagination;
-
-use Psr\Http\Message\ServerRequestInterface;
+namespace Phauthentic\Pagination\Paginator;
 
 /**
- * PaginationToDoctrineRepositoryMapper
- *
- * @link https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/tutorials/pagination.html
+ * Pagination Adapter Interface
  */
-class Doctrine2Adapter implements PaginationAdapterInterface
+interface PaginatorInterface
 {
     /**
      * Maps the params to the repository
@@ -28,12 +24,5 @@ class Doctrine2Adapter implements PaginationAdapterInterface
      * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Pagination params
      * @param mixed $repository
      */
-    public function paginate(PaginationParamsInterface $paginationParams, $repository)
-    {
-        $query = $repository
-           ->setFirstResult($paginationParams->getCurrentPage())
-           ->setMaxResults($paginationParams->getLimit());
-
-        return new Paginator($query, $fetchJoinCollection = true);
-    }
+    public function paginate(PaginationParamsInterface $paginationParams, $repository);
 }
