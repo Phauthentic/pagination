@@ -15,6 +15,10 @@ namespace Phauthentic\Pagination;
 
 /**
  * Pagination Params Transformer Interface
+ *
+ * Use this interface for objects that allow you to convert the pagination
+ * params data transfer object into something your app / library is expecting
+ * and vice versa.
  */
 interface PaginationParamsTransformerInterface
 {

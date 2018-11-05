@@ -32,6 +32,13 @@ class ServerRequestQueryParamsFactory extends AbstractFactory {
         'sortBy' => 'sort'
     ];
 
+    /**
+     * Gets the page number value from the server request params
+     *
+     * @param array $params Server request query params
+     * @param string name of the query param
+     * @return int
+     */
     public function getPage(array $params, string $name = 'page'): int
     {
         if (isset($params[$name])) {
@@ -41,6 +48,13 @@ class ServerRequestQueryParamsFactory extends AbstractFactory {
         return 1;
     }
 
+    /**
+     * Gets the limit value from the server request params
+     *
+     * @param array $params Server request query params
+     * @param string name of the query param
+     * @return int
+     */
     public function getLimit(array $params, string $name = 'limit'): int
     {
         if (isset($params[$name])) {
@@ -50,6 +64,13 @@ class ServerRequestQueryParamsFactory extends AbstractFactory {
         return 20;
     }
 
+    /**
+     * Gets the sort value from the server request params
+     *
+     * @param array $params Server request query params
+     * @param string name of the query param
+     * @return string|null
+     */
     public function getSortBy(array $params, string $name = 'sort'): ?string
     {
         if (!empty($params[$name])) {
@@ -59,6 +80,13 @@ class ServerRequestQueryParamsFactory extends AbstractFactory {
         return null;
     }
 
+    /**
+     * Gets the direction value from the server request params
+     *
+     * @param array $params Server request query params
+     * @param string name of the query param
+     * @return string Must be desc `desc`or `asc`
+     */
     public function getDirection(array $params, string $name = 'direction'): string
     {
         if (isset($params[$name])) {

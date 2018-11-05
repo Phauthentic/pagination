@@ -83,9 +83,9 @@ class PaginationService
      * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Paging Params
      * @return mixed
      */
-    public function paginate($repository, PaginationParamsInterface $paginationParams)
+    public function paginate($repository, ?PaginationParamsInterface $paginationParams)
     {
-        if (empty($paginationParams)) {
+        if ($paginationParams === null) {
             $paginationParams = $this->paginationParamsFactory->build($repository);
         }
 
