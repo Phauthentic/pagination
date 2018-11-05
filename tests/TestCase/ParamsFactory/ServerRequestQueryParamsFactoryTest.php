@@ -15,7 +15,7 @@ namespace Phauthentic\Pagination\Test\TestCase\ParamsFactory;
 
 use Phauthentic\Pagination\PaginationParams;
 use Phauthentic\Pagination\PaginationParamsInterface;
-use Phauthentic\Pagination\ServerRequestQueryParamsFactory;
+use Phauthentic\Pagination\ParamsFactory\ServerRequestQueryParamsFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 

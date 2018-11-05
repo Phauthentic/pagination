@@ -13,6 +13,7 @@ declare(strict_types = 1);
  */
 namespace Phauthentic\Pagination\Test\TestCase\Paginator;
 
+use Phauthentic\Pagination\PaginationParams;
 use Phauthentic\Pagination\Paginator\ArrayPaginator;
 use PHPUnit\Framework\TestCase;
 
@@ -45,16 +46,16 @@ class ArrayPaginatorTest extends TestCase
             'nine',
             'ten'
         ];
-        $adapter = new ArrayPaginatorAdapter();
+        $adapter = new ArrayPaginator();
         $params = new PaginationParams();
         $params->setLimit(2)->setPage(3);
 
-        $result = $adapter->paginate($params, $data);
+        $result = $adapter->paginate($data, $params);
         $this->assertEquals([4 => 'five', 5 => 'six'], $result);
 
         $params->setLimit(3)->setPage(4);
 
-        $result = $adapter->paginate($params, $data);
+        $result = $adapter->paginate($data, $params);
         $this->assertEquals([9 => 'ten'], $result);
     }
 }

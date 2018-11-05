@@ -14,7 +14,7 @@ declare(strict_types = 1);
 namespace Phauthentic\Pagination\Test\TestCase;
 
 use Phauthentic\Pagination\PaginationParams;
-use Phauthentic\Pagination\ServerRequestQueryParamsFactory;
+use Phauthentic\Pagination\ParamsFactory\ServerRequestQueryParamsFactory;
 use Phauthentic\Pagination\RequestBasedPaginationService;
 use Phauthentic\Pagination\PaginationToCakeOrmMapper;
 use PHPUnit\Framework\TestCase;

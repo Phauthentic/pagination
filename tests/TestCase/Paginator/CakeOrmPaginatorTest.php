@@ -16,7 +16,7 @@ namespace Phauthentic\Pagination\Test\TestCase\Paginator;
 use Cake\ORM\TableRegistry;
 use Phauthentic\Pagination\Paginator\CakeOrmPaginator;
 use Phauthentic\Pagination\PaginationParams;
-use Phauthentic\Pagination\ServerRequestQueryParamsFactory;
+use Phauthentic\Pagination\ParamsFactory\ServerRequestQueryParamsFactory;
 use Phauthentic\Pagination\RequestBasedPaginationService;
 use PHPUnit\Framework\TestCase;
 

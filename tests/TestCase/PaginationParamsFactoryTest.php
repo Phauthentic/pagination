@@ -13,7 +13,7 @@ declare(strict_types = 1);
  */
 namespace Phauthentic\Pagination\Test\TestCase;
 
-use Phauthentic\Pagination\ServerRequestQueryParamsFactory;
+use Phauthentic\Pagination\ParamsFactory\ServerRequestQueryParamsFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 

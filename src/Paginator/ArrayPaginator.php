@@ -71,7 +71,7 @@ class ArrayPaginator implements PaginatorInterface
      */
     protected function sort($array, PaginationParams $paginationParams)
     {
-        if (empty($this->setSortHandler())) {
+        if (empty($this->setSortHandler)) {
             return $array;
         }
 
