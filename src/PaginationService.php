@@ -14,6 +14,7 @@ declare(strict_types = 1);
 namespace Phauthentic\Pagination;
 
 use Phauthentic\Pagination\Paginator\PaginatorInterface;
+use Phauthentic\Pagination\ParamsFactory\PaginationParamsFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -89,6 +90,6 @@ class PaginationService
             $paginationParams = $this->paginationParamsFactory->build($repository);
         }
 
-        return $this->paginator->paginate($paginationParams, $repository);
+        return $this->paginator->paginate($repository, $paginationParams);
     }
 }
