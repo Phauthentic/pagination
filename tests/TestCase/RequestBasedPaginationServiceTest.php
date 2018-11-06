@@ -13,17 +13,17 @@ declare(strict_types = 1);
  */
 namespace Phauthentic\Pagination\Test\TestCase;
 
-use Phauthentic\Pagination\CakeOrmAdapter;
-use Phauthentic\Pagination\PaginationParamsFactory;
-use Phauthentic\Pagination\PaginationService;
-use Phauthentic\Pagination\PaginationToCakeOrmMapper;
+use Cake\ORM\TableRegistry;
+use Phauthentic\Pagination\Paginator\CakeOrmPaginator;
+use Phauthentic\Pagination\ParamsFactory\ServerRequestQueryParamsFactory;
+use Phauthentic\Pagination\RequestBasedPaginationService;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Pagination Service Test
  */
-class PaginationServiceTest extends TestCase
+class RequestBasedPaginationServiceTest extends TestCase
 {
     /**
      * Tests the service
@@ -42,16 +42,14 @@ class PaginationServiceTest extends TestCase
                 'direction' => 'asc'
             ]);
 
-        $service = new PaginationService(
-            new PaginationParamsFactory(),
-            new CakeOrmAdapter()
+        $service = new RequestBasedPaginationService(
+            new ServerRequestQueryParamsFactory(),
+            new CakeOrmPaginator()
         );
 
         $params = $service->getPagingParamsFromRequest($request);
 
-        $result = $service->paginate($params, new \stdClass(), function($params, $object) {
-           return [];
-        });
+        //$result = $service->paginate($params, TableRegistry::getTableLocator()->get('users'));
 
         //var_dump($result);
     }

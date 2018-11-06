@@ -11,18 +11,20 @@ declare(strict_types = 1);
  * @link          https://github.com/Phauthentic
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Phauthentic\Pagination;
+namespace Phauthentic\Pagination\ParamsFactory;
+
+use Phauthentic\Pagination\PaginationParams;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Pagination Adapter Interface
+ * Pagination Service Interface
  */
-interface PaginationAdapterInterface
+abstract class AbstractFactory implements PaginationParamsFactoryInterface
 {
     /**
-     * Maps the params to the repository
+     * Pagination class to instantiate by the factory
      *
-     * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Pagination params
-     * @param mixed $repository
+     * @var string
      */
-    public function paginate(PaginationParamsInterface $paginationParams, $repository);
+    public static $paginationParamsClass = PaginationParams::class;
 }

@@ -11,16 +11,19 @@ declare(strict_types = 1);
  * @link          https://github.com/Phauthentic
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Phauthentic\Pagination;
+namespace Phauthentic\Pagination\ParamsFactory;
 
+use Phauthentic\Pagination\PaginationParamsInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Pagination Service Interface
+ * Extracts the pagination information from a server requests query string
  */
-class PaginationParamsFactory implements PaginationParamsFactoryInterface {
+class ServerRequestQueryParamsFactory extends AbstractFactory {
 
     /**
+     * Parameter map
+     *
      * @var array
      */
     protected $map = [
@@ -30,6 +33,13 @@ class PaginationParamsFactory implements PaginationParamsFactoryInterface {
         'sortBy' => 'sort'
     ];
 
+    /**
+     * Gets the page number value from the server request params
+     *
+     * @param array $params Server request query params
+     * @param string $name of the query param
+     * @return int
+     */
     public function getPage(array $params, string $name = 'page'): int
     {
         if (isset($params[$name])) {
@@ -39,6 +49,13 @@ class PaginationParamsFactory implements PaginationParamsFactoryInterface {
         return 1;
     }
 
+    /**
+     * Gets the limit value from the server request params
+     *
+     * @param array $params Server request query params
+     * @param string $name of the query param
+     * @return int
+     */
     public function getLimit(array $params, string $name = 'limit'): int
     {
         if (isset($params[$name])) {
@@ -48,6 +65,13 @@ class PaginationParamsFactory implements PaginationParamsFactoryInterface {
         return 20;
     }
 
+    /**
+     * Gets the sort value from the server request params
+     *
+     * @param array $params Server request query params
+     * @param string $name of the query param
+     * @return string|null
+     */
     public function getSortBy(array $params, string $name = 'sort'): ?string
     {
         if (!empty($params[$name])) {
@@ -57,6 +81,13 @@ class PaginationParamsFactory implements PaginationParamsFactoryInterface {
         return null;
     }
 
+    /**
+     * Gets the direction value from the server request params
+     *
+     * @param array $params Server request query params
+     * @param string $name of the query param
+     * @return string Must be desc `desc`or `asc`
+     */
     public function getDirection(array $params, string $name = 'direction'): string
     {
         if (isset($params[$name])) {
@@ -83,7 +114,7 @@ class PaginationParamsFactory implements PaginationParamsFactoryInterface {
     {
         $queryParams = $request->getQueryParams();
 
-        $params = new PaginationParams();
+        $params = new static::$paginationParamsClass();
 
         foreach ($this->map as $setter => $value) {
             $setterMethod = 'set' . $setter;
@@ -104,8 +135,12 @@ class PaginationParamsFactory implements PaginationParamsFactoryInterface {
     /**
      * @inheritDoc
      */
-    public function build(ServerRequestInterface $request): PaginationParamsInterface
+    public function build($data): PaginationParamsInterface
     {
-        return $this->mapRequest($request);
+        if (!$data instanceof ServerRequestInterface) {
+           return new static::$paginationParamsClass();
+        }
+
+        return $this->mapRequest($data);
     }
 }

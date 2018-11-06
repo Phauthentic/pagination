@@ -11,16 +11,18 @@ declare(strict_types = 1);
  * @link          https://github.com/Phauthentic
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Phauthentic\Pagination\Test\TestCase;
+namespace Phauthentic\Pagination\Test\TestCase\ParamsFactory;
 
-use Phauthentic\Pagination\PaginationParamsFactory;
+use Phauthentic\Pagination\PaginationParams;
+use Phauthentic\Pagination\PaginationParamsInterface;
+use Phauthentic\Pagination\ParamsFactory\ServerRequestQueryParamsFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Pagination Params Factory Test
+ * ServerRequestQueryParamsFactoryTest
  */
-class PaginationParamsFactoryTest extends TestCase
+class ServerRequestQueryParamsFactoryTest extends TestCase
 {
     /**
      * testBuild
@@ -28,6 +30,22 @@ class PaginationParamsFactoryTest extends TestCase
      * @return void
      */
     public function testBuild(): void
+    {
+        $requestMock = $this->getMockBuilder(ServerRequestInterface::class)
+            ->getMock();
+
+        $factory = new ServerRequestQueryParamsFactory();
+        $result = $factory->build($requestMock);
+
+        $this->assertInstanceOf(PaginationParamsInterface::class, $result);
+    }
+
+    /**
+     * testBuildWithQueryParams
+     *
+     * @return void
+     */
+    public function testBuildWithQueryParams(): void
     {
         $mockRequest = $this->getMockBuilder(ServerRequestInterface::class)
             ->getMock();
@@ -37,11 +55,11 @@ class PaginationParamsFactoryTest extends TestCase
             ->willReturn([
                 'sort' => 'username',
                 'direction' => 'desc'
-            ]);
+        ]);
 
-        $factory = new PaginationParamsFactory();
+        $factory = new ServerRequestQueryParamsFactory();
         $result = $factory->build($mockRequest);
-
-        //var_export($result->toArray());
+        $this->assertEquals('username', $result->getSortBy());
+        $this->assertEquals('desc', $result->getDirection());
     }
 }

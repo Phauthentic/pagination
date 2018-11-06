@@ -12,15 +12,16 @@
  */
 declare(strict_types = 1);
 
-namespace Phauthentic\Pagination;
+namespace Phauthentic\Pagination\Paginator;
 
 use Cake\Datasource\QueryInterface;
+use Phauthentic\Pagination\PaginationParamsInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Pagination To Cake Orm Mapper
  */
-class CakeOrmAdapter implements PaginationAdapterInterface
+class CakeOrmPaginator implements PaginatorInterface
 {
     /**
      * Maps the params to the repository
@@ -29,7 +30,7 @@ class CakeOrmAdapter implements PaginationAdapterInterface
      * @param mixed $repository
      * @return mixed
      */
-    public function paginate(PaginationParamsInterface $paginationParams, $object)
+    public function paginate($object, PaginationParamsInterface $paginationParams)
     {
         /** @var \Cake\Database\Query $query */
         $query = null;

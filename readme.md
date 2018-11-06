@@ -13,20 +13,17 @@ It gets the information from the request object that must comply to [the PSR-7 s
 ## How to use it
 
 ```php
+use Phauthentic\Pagination\PaginationService;
+use Phauthentic\Pagination\Paginator\ArrayPaginator;
+
 // Do this or use your favorite DI container to build the service
 $service = new PaginationService(
     new PaginationParamsFactory(),
-    new PaginationToCakeOrmMapper()
+    new ArrayPaginator()
 );
-
-// Get the pagination data transfer object
-$paginationParams = $service->getPagingParams($request);
 
 // Calls getPagingParams() internally and passes it to the mapper
-$resultSet = $service->paginate(
-    $request,
-    $myRepositoryObject
-);
+$resultSet = $service->paginate($array);
 ```
 
 ## Copyright & License

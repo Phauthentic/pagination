@@ -11,21 +11,16 @@ declare(strict_types = 1);
  * @link          https://github.com/Phauthentic
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Phauthentic\Pagination\Test\TestCase;
+namespace Phauthentic\Pagination\Test\TestCase\Paginator;
 
-use Cake\ORM\TableRegistry;
-use Phauthentic\Pagination\ArrayPaginatorAdapter;
-use Phauthentic\Pagination\CakeOrmAdapter;
 use Phauthentic\Pagination\PaginationParams;
-use Phauthentic\Pagination\PaginationParamsFactory;
-use Phauthentic\Pagination\PaginationService;
-use Phauthentic\Pagination\PaginationToCakeOrmMapper;
+use Phauthentic\Pagination\Paginator\ArrayPaginator;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Array Paginator Adapter
  */
-class ArrayPaginatorAdapterTest extends TestCase
+class ArrayPaginatorTest extends TestCase
 {
     public function setUp()/* The :void return type declaration that should be here would cause a BC issue */
     {
@@ -51,16 +46,16 @@ class ArrayPaginatorAdapterTest extends TestCase
             'nine',
             'ten'
         ];
-        $adapter = new ArrayPaginatorAdapter();
+        $adapter = new ArrayPaginator();
         $params = new PaginationParams();
         $params->setLimit(2)->setPage(3);
 
-        $result = $adapter->paginate($params, $data);
+        $result = $adapter->paginate($data, $params);
         $this->assertEquals([4 => 'five', 5 => 'six'], $result);
 
         $params->setLimit(3)->setPage(4);
 
-        $result = $adapter->paginate($params, $data);
+        $result = $adapter->paginate($data, $params);
         $this->assertEquals([9 => 'ten'], $result);
     }
 }

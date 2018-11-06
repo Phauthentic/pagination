@@ -12,21 +12,31 @@
  */
 declare(strict_types = 1);
 
-namespace Phauthentic\Pagination;
+namespace Phauthentic\Pagination\Paginator;
+
+use Phauthentic\Pagination\PaginationParams;
+use Phauthentic\Pagination\PaginationParamsInterface;
 
 /**
  * Paginates arrays
  */
-class ArrayPaginatorAdapter implements PaginationAdapterInterface
+class ArrayPaginator implements PaginatorInterface
 {
+    /**
+     * Sort Handler callback
+     *
+     * @var callable
+     */
+     protected $sortHandler;
+
     /**
      * Maps the params to the repository
      *
      * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Pagination params
-     * @param mixed $repository
-     * @return mixed
+     * @param array $array
+     * @return array
      */
-    public function paginate(PaginationParamsInterface $paginationParams, $array)
+    public function paginate($array, PaginationParamsInterface $paginationParams)
     {
         $paginationParams->setCount(count($array));
 
@@ -34,6 +44,8 @@ class ArrayPaginatorAdapter implements PaginationAdapterInterface
         $data = [];
         $offset = $paginationParams->getOffset();
         $stopAt = $offset + $paginationParams->getLimit();
+
+        $array = $this->sort($array, $paginationParams);
 
         foreach ($array as $key => $value) {
             if ($count > $stopAt) {
@@ -48,5 +60,35 @@ class ArrayPaginatorAdapter implements PaginationAdapterInterface
         }
 
         return $data;
+    }
+
+    /**
+     * Sorts the array by a callback
+     *
+     * @param array $array Array
+     * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Pagination params
+     * @return array
+     */
+    protected function sort($array, PaginationParams $paginationParams)
+    {
+        if (empty($this->setSortHandler)) {
+            return $array;
+        }
+
+        $handler = $this->sortHandler;
+
+        return $handler($array, $paginationParams);
+    }
+
+    /**
+     * Sets the sort handler callback
+     *
+     * @return $this
+     */
+    public function setSortHandler(callable $handler): self
+    {
+        $this->sortHandler = $handler;
+
+        return $this;
     }
 }

@@ -11,20 +11,21 @@ declare(strict_types = 1);
  * @link          https://github.com/Phauthentic
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Phauthentic\Pagination;
+namespace Phauthentic\Pagination\ParamsFactory;
+
+use Phauthentic\Pagination\PaginationParamsInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Pagination Service Interface
  */
-interface PaginationServiceInterface
+interface PaginationParamsFactoryInterface
 {
     /**
-     * Triggers the pagination
+     * Builds the pagination parameters
      *
-     * @param \Psr\Http\Message\ServerRequestInterface
-     * @param mixed $repository The repository / array / collection to paginate
-     * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Paging Params
-     * @return mixed
+     * @param mixed $data Data from which the factory will generate the params
+     * @return \Phauthentic\Pagination\PaginationParamsInterface
      */
-    public function paginate($repository, PaginationParamsInterface $paginationParams);
+    public function build($data): PaginationParamsInterface;
 }
