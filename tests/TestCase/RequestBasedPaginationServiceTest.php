@@ -13,35 +13,44 @@ declare(strict_types = 1);
  */
 namespace Phauthentic\Pagination\Test\TestCase;
 
+use Cake\ORM\TableRegistry;
+use Phauthentic\Pagination\Paginator\CakeOrmPaginator;
 use Phauthentic\Pagination\ParamsFactory\ServerRequestQueryParamsFactory;
+use Phauthentic\Pagination\RequestBasedPaginationService;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Pagination Params Factory Test
+ * Pagination Service Test
  */
-class PaginationParamsFactoryTest extends TestCase
+class RequestBasedPaginationServiceTest extends TestCase
 {
     /**
-     * testBuild
+     * Tests the service
      *
      * @return void
      */
-    public function testBuild(): void
+    public function testService(): void
     {
-        $mockRequest = $this->getMockBuilder(ServerRequestInterface::class)
+        $request = $this->getMockBuilder(ServerRequestInterface::class)
             ->getMock();
 
-        $mockRequest->expects($this->any())
+        $request->expects($this->any())
             ->method('getQueryParams')
             ->willReturn([
                 'sort' => 'username',
-                'direction' => 'desc'
+                'direction' => 'asc'
             ]);
 
-        $factory = new ServerRequestQueryParamsFactory();
-        $result = $factory->build($mockRequest);
+        $service = new RequestBasedPaginationService(
+            new ServerRequestQueryParamsFactory(),
+            new CakeOrmPaginator()
+        );
 
-        //var_export($result->toArray());
+        $params = $service->getPagingParamsFromRequest($request);
+
+        //$result = $service->paginate($params, TableRegistry::getTableLocator()->get('users'));
+
+        //var_dump($result);
     }
 }

@@ -22,8 +22,8 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * ServerRequestQueryParamsFactoryTest
  */
-class ServerRequestQueryParamsFactoryTest extends TestCase {
-
+class ServerRequestQueryParamsFactoryTest extends TestCase
+{
     /**
      * testBuild
      *
@@ -38,5 +38,28 @@ class ServerRequestQueryParamsFactoryTest extends TestCase {
         $result = $factory->build($requestMock);
 
         $this->assertInstanceOf(PaginationParamsInterface::class, $result);
+    }
+
+    /**
+     * testBuildWithQueryParams
+     *
+     * @return void
+     */
+    public function testBuildWithQueryParams(): void
+    {
+        $mockRequest = $this->getMockBuilder(ServerRequestInterface::class)
+            ->getMock();
+
+        $mockRequest->expects($this->any())
+            ->method('getQueryParams')
+            ->willReturn([
+                'sort' => 'username',
+                'direction' => 'desc'
+        ]);
+
+        $factory = new ServerRequestQueryParamsFactory();
+        $result = $factory->build($mockRequest);
+        $this->assertEquals('username', $result->getSortBy());
+        $this->assertEquals('desc', $result->getDirection());
     }
 }

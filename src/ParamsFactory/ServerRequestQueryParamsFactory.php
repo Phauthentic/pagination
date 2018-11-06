@@ -37,7 +37,7 @@ class ServerRequestQueryParamsFactory extends AbstractFactory {
      * Gets the page number value from the server request params
      *
      * @param array $params Server request query params
-     * @param string name of the query param
+     * @param string $name of the query param
      * @return int
      */
     public function getPage(array $params, string $name = 'page'): int
@@ -53,7 +53,7 @@ class ServerRequestQueryParamsFactory extends AbstractFactory {
      * Gets the limit value from the server request params
      *
      * @param array $params Server request query params
-     * @param string name of the query param
+     * @param string $name of the query param
      * @return int
      */
     public function getLimit(array $params, string $name = 'limit'): int
@@ -69,7 +69,7 @@ class ServerRequestQueryParamsFactory extends AbstractFactory {
      * Gets the sort value from the server request params
      *
      * @param array $params Server request query params
-     * @param string name of the query param
+     * @param string $name of the query param
      * @return string|null
      */
     public function getSortBy(array $params, string $name = 'sort'): ?string
@@ -85,7 +85,7 @@ class ServerRequestQueryParamsFactory extends AbstractFactory {
      * Gets the direction value from the server request params
      *
      * @param array $params Server request query params
-     * @param string name of the query param
+     * @param string $name of the query param
      * @return string Must be desc `desc`or `asc`
      */
     public function getDirection(array $params, string $name = 'direction'): string

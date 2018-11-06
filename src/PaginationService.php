@@ -15,7 +15,6 @@ namespace Phauthentic\Pagination;
 
 use Phauthentic\Pagination\Paginator\PaginatorInterface;
 use Phauthentic\Pagination\ParamsFactory\PaginationParamsFactoryInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Pagination Service
@@ -28,7 +27,7 @@ class PaginationService
     /**
      * Pagination Params Factory
      *
-     * @var \Phauthentic\Pagination\PaginationParamsFactoryInterface
+     * @var \Phauthentic\Pagination\ParamsFactory\PaginationParamsFactoryInterface
      */
     protected $paginationParamsFactory;
 
@@ -42,7 +41,7 @@ class PaginationService
     /**
      * Constructor
      *
-     * @param \Phauthentic\Pagination\PaginationParamsFactoryInterface
+     * @param \Phauthentic\Pagination\ParamsFactory\PaginationParamsFactoryInterface
      */
     public function __construct(
         PaginationParamsFactoryInterface $paginationParamsFactory,
@@ -55,6 +54,7 @@ class PaginationService
     /**
      * Sets the object that maps the pagination data to the underlying implementation
      *
+     * @param \Phauthentic\Pagination\Paginator\PaginatorInterface
      * @return $this
      */
     public function setPaginator(PaginatorInterface $paginator): self
@@ -79,7 +79,6 @@ class PaginationService
     /**
      * Triggers the pagination
      *
-     * @param \Psr\Http\Message\ServerRequestInterface
      * @param mixed $repository The repository / array / collection to paginate
      * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Paging Params
      * @return mixed
