@@ -135,7 +135,7 @@ class ServerRequestQueryParamsFactory extends AbstractFactory {
     /**
      * @inheritDoc
      */
-    public function build($data): PaginationParamsInterface
+    public function build($data = null): PaginationParamsInterface
     {
         if (!$data instanceof ServerRequestInterface) {
            return new static::$paginationParamsClass();

@@ -22,7 +22,7 @@ use Phauthentic\Pagination\ParamsFactory\PaginationParamsFactoryInterface;
  * Application layer pagination service that should in theory be able to paginate
  * any data / persistence layer implementation through the mappers.
  */
-class PaginationService
+class PaginationService implements PaginationServiceInterface
 {
     /**
      * Pagination Params Factory
@@ -77,13 +77,19 @@ class PaginationService
     }
 
     /**
-     * Triggers the pagination
+     * Extracts the pagination params from the given data
      *
-     * @param mixed $repository The repository / array / collection to paginate
-     * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Paging Params
-     * @return mixed
+     * @return \Phauthentic\Pagination\PaginationParamsInterface
      */
-    public function paginate($repository, ?PaginationParamsInterface $paginationParams)
+    public function extractPaginationParams($repository): PaginationParamsInterface
+    {
+        return $this->paginationParamsFactory->build($repository);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function paginate($repository, ?PaginationParamsInterface $paginationParams = null)
     {
         if ($paginationParams === null) {
             $paginationParams = $this->paginationParamsFactory->build($repository);

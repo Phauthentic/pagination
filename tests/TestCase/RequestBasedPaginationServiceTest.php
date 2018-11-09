@@ -14,7 +14,7 @@ declare(strict_types = 1);
 namespace Phauthentic\Pagination\Test\TestCase;
 
 use Cake\ORM\TableRegistry;
-use Phauthentic\Pagination\Paginator\CakeOrmPaginator;
+use Phauthentic\Pagination\Paginator\ArrayPaginator;
 use Phauthentic\Pagination\ParamsFactory\ServerRequestQueryParamsFactory;
 use Phauthentic\Pagination\RequestBasedPaginationService;
 use PHPUnit\Framework\TestCase;
@@ -39,18 +39,18 @@ class RequestBasedPaginationServiceTest extends TestCase
             ->method('getQueryParams')
             ->willReturn([
                 'sort' => 'username',
-                'direction' => 'asc'
+                'direction' => 'desc'
             ]);
 
         $service = new RequestBasedPaginationService(
             new ServerRequestQueryParamsFactory(),
-            new CakeOrmPaginator()
+            new ArrayPaginator()
         );
 
         $params = $service->getPagingParamsFromRequest($request);
+        $result = $service->paginate([['username' => 'foo'], ['username' => 'bar']], $params);
 
-        //$result = $service->paginate($params, TableRegistry::getTableLocator()->get('users'));
-
-        //var_dump($result);
+        $this->assertEquals('username', $params->getSortBy());
+        $this->assertEquals('desc', $params->getDirection());
     }
 }
