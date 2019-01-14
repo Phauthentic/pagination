@@ -41,7 +41,7 @@ abstract class FixturizedTestCase extends TestCase
     protected static function getPDO(): PDO
     {
         if (self::$pdo == null) {
-            self::$pdo = new PDO('sqlite:///:memory:');
+            self::$pdo = new PDO(getenv('PDO_DB_DSN'));
         }
 
         return self::$pdo;

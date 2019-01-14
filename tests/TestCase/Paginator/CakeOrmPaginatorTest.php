@@ -42,15 +42,9 @@ class CakeOrmPaginatorTest extends PaginationTestCase
             $this->markTestSkipped('CakePHP OR vendor lib is not present');
         }
 
-        $url = getenv('PDO_DB_DSN');
-
-        ConnectionManager::setConfig('test', [
-            'className' => \Cake\Database\Driver\Sqlite::class,
-            'url' => $url
-        ]);
+        $url = 'sqlite:///:memory:';
 
         ConnectionManager::setConfig('default', [
-            'className' => \Cake\Database\Driver\Sqlite::class,
             'url' => $url
         ]);
     }
@@ -63,10 +57,31 @@ class CakeOrmPaginatorTest extends PaginationTestCase
     public function testPaginate(): void
     {
         $usersTable = TableRegistry::getTableLocator()->get('Users');
+        $usersTable->getConnection()->getDriver()->setConnection($this->getPDO());
+
         $adapter = new CakeOrmPaginator();
         $params = new PaginationParams();
         $params->setLimit(2);
 
         $result = $adapter->paginate($usersTable, $params);
+        $this->assertCount(2, $result->toArray());
+
+        $adapter = new CakeOrmPaginator();
+        $params = new PaginationParams();
+        $params
+            ->setLimit(3)
+            ->setSortBy('username')
+            ->setDirection('desc');
+
+        $result = $adapter->paginate($usersTable, $params);
+        $this->assertCount(3, $result->toArray());
+
+        $this->assertEquals('steven_hawking', $result->toArray()[0]['username']);
+        $this->assertEquals('leung_ting', $result->toArray()[2]['username']);
+
+        $params->setDirection('asc');
+        $result = $adapter->paginate($usersTable, $params);
+        $this->assertEquals('florian', $result->toArray()[0]['username']);
+        $this->assertEquals('robert', $result->toArray()[2]['username']);
     }
 }

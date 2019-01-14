@@ -1,4 +1,4 @@
 <?php
 if (!getenv('PDO_DB_DSN')) {
-    putenv('db_dsn=sqlite:///:memory:');
+    putenv('PDO_DB_DSN=sqlite::memory:');
 }

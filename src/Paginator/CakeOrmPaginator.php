@@ -40,6 +40,7 @@ class CakeOrmPaginator implements PaginatorInterface
             $object = $query->getRepository();
         } else {
             $query = $repository->find();
+            $object = $repository;
         }
 
         if (!$query instanceof QueryInterface) {

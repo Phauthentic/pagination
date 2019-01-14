@@ -30,7 +30,6 @@ class PaginationTestCase extends FixturizedTestCase
      */
     protected function createFixture(): FixtureInterface
     {
-    	die('TEST');
         return new UsersFixture();
     }
 }
