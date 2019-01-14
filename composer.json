@@ -1,7 +1,8 @@
 {
   "name": "Phauthentic/pagination",
   "type": "library",
-  "description": "",
+  "description": "A framework and library agnostic data paginator",
+  "keywords": ["pagination", "database", "array", "datasource", "paging", "agnostic"],
   "require": {
     "psr/http-message": "^1.0"
  },
