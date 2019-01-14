@@ -43,7 +43,6 @@ class Doctrine2Paginator implements PaginatorInterface
      */
     public function paginate($repository, PaginationParamsInterface $paginationParams)
     {
-        /** @var $repository \Doctrine\ORM\QueryBuilder */
         if (!$repository instanceof QueryBuilder) {
             throw new InvalidArgumentException(sprintf(
                 'The $repository argument must be an instance of %s for this adapter',
@@ -51,6 +50,7 @@ class Doctrine2Paginator implements PaginatorInterface
             ));
         }
 
+        /** @var $repository \Doctrine\ORM\QueryBuilder */
         $sortBy = $paginationParams->getSortBy();
         if (!empty($sortBy)) {
             $repository->addOrderBy(

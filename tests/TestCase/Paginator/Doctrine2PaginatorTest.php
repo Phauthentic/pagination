@@ -16,9 +16,7 @@ namespace Phauthentic\Pagination\Test\TestCase\Paginator;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 use Phauthentic\Pagination\PaginationParams;
-use Phauthentic\Pagination\PaginationParamsInterface;
 use Phauthentic\Pagination\Paginator\Doctrine2Paginator;
-use Phauthentic\Pagination\Paginator\PaginatorInterface;
 use Phauthentic\Pagination\Test\TestCase\PaginationTestCase;
 
 /**
@@ -40,16 +38,25 @@ class Users
      */
     private $username;
 
+    /**
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->username;
     }
 
+    /**
+     * @return void
+     */
     public function setName($name)
     {
         $this->username = $name;
