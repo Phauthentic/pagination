@@ -23,8 +23,8 @@ interface PaginationServiceInterface
      *
      * @param \Psr\Http\Message\ServerRequestInterface
      * @param mixed $repository The repository / array / collection to paginate
-     * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Paging Params
+     * @param null|\Phauthentic\Pagination\PaginationParamsInterface $paginationParams Paging Params
      * @return mixed
      */
-    public function paginate($repository, PaginationParamsInterface $paginationParams);
+    public function paginate($repository, ?PaginationParamsInterface $paginationParams = null);
 }

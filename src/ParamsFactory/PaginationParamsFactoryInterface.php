@@ -27,5 +27,5 @@ interface PaginationParamsFactoryInterface
      * @param mixed $data Data from which the factory will generate the params
      * @return \Phauthentic\Pagination\PaginationParamsInterface
      */
-    public function build($data): PaginationParamsInterface;
+    public function build($data = null): PaginationParamsInterface;
 }
