@@ -13,8 +13,7 @@ declare(strict_types = 1);
  */
 namespace Phauthentic\Pagination\Paginator;
 
-use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
-use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Psr\Http\Message\ServerRequestInterface;
@@ -29,7 +28,9 @@ use InvalidArgumentException;
 class Doctrine2Paginator implements PaginatorInterface
 {
     /**
+     * The Doctrine Paginator Class
      *
+     * @var string
      */
     public static $paginatorClass = Paginator::class;
 
@@ -43,10 +44,11 @@ class Doctrine2Paginator implements PaginatorInterface
     public function paginate($repository, PaginationParamsInterface $paginationParams)
     {
         /** @var $repository \Doctrine\ORM\QueryBuilder */
-        if (!$repository instanceof ORMQueryBuilder
-            && !$repository instanceof DBALQueryBuilder
-        ) {
-            throw new InvalidArgumentException();
+        if (!$repository instanceof QueryBuilder) {
+            throw new InvalidArgumentException(sprintf(
+                'The $repository argument must be an instance of %s for this adapter',
+                QueryBuilder::class
+            ));
         }
 
         $sortBy = $paginationParams->getSortBy();
