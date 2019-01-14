@@ -13,21 +13,46 @@ declare(strict_types = 1);
  */
 namespace Phauthentic\Pagination\Test\TestCase\Paginator;
 
+use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
 use Phauthentic\Pagination\Paginator\CakeOrmPaginator;
 use Phauthentic\Pagination\PaginationParams;
 use Phauthentic\Pagination\ParamsFactory\ServerRequestQueryParamsFactory;
 use Phauthentic\Pagination\RequestBasedPaginationService;
-use PHPUnit\Framework\TestCase;
+use Phauthentic\Pagination\Test\Fixture\FixtureInterface;
+use Phauthentic\Pagination\Test\Fixture\UsersFixture;
+use Phauthentic\Pagination\Test\TestCase\FixturizedTestCase;
+use Phauthentic\Pagination\Test\TestCase\PaginationTestCase;
 
 /**
  * Cake Orm Adapter
  */
-class CakeOrmPaginatorTest extends TestCase
+class CakeOrmPaginatorTest extends PaginationTestCase
 {
-    public function setUp()/* The :void return type declaration that should be here would cause a BC issue */
+    /**
+     * Setup
+     *
+     * @return void
+     */
+    public function setUp(): void
     {
         parent::setUp();
+
+        if (!class_exists(ConnectionManager::class)) {
+            $this->markTestSkipped('CakePHP OR vendor lib is not present');
+        }
+
+        $url = getenv('PDO_DB_DSN');
+
+        ConnectionManager::setConfig('test', [
+            'className' => \Cake\Database\Driver\Sqlite::class,
+            'url' => $url
+        ]);
+
+        ConnectionManager::setConfig('default', [
+            'className' => \Cake\Database\Driver\Sqlite::class,
+            'url' => $url
+        ]);
     }
 
     /**
@@ -37,12 +62,11 @@ class CakeOrmPaginatorTest extends TestCase
      */
     public function testPaginate(): void
     {
-        /*
         $usersTable = TableRegistry::getTableLocator()->get('Users');
-        $adapter = new CakeOrmAdapter();
+        $adapter = new CakeOrmPaginator();
         $params = new PaginationParams();
+        $params->setLimit(2);
 
-        $result = $adapter->paginate($params, $usersTable);
-        */
+        $result = $adapter->paginate($usersTable, $params);
     }
 }
