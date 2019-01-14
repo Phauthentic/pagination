@@ -55,7 +55,7 @@ class ServerRequestQueryParamsFactoryTest extends TestCase
             ->willReturn([
                 'sort' => 'username',
                 'direction' => 'desc'
-        ]);
+            ]);
 
         $factory = new ServerRequestQueryParamsFactory();
         $result = $factory->build($mockRequest);

@@ -14,6 +14,7 @@ declare(strict_types = 1);
 namespace Phauthentic\Pagination\Paginator;
 
 use Psr\Http\Message\ServerRequestInterface;
+use Phauthentic\Pagination\PaginationParamsInterface;
 
 /**
  * PaginationToDoctrineRepositoryMapper
@@ -28,7 +29,7 @@ class Doctrine2Paginator implements PaginatorInterface
      * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Pagination params
      * @param mixed $repository
      */
-    public function paginate(PaginationParamsInterface $paginationParams, $repository)
+    public function paginate($repository, PaginationParamsInterface $paginationParams)
     {
         $query = $repository
            ->setFirstResult($paginationParams->getCurrentPage())
