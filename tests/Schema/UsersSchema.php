@@ -13,7 +13,7 @@ class UsersSchema implements SchemaInterface
     private static $sql =
         "CREATE TABLE IF NOT EXISTS users (
             id INT(11),
-            username VARCHAR(128),
+            username VARCHAR(64),
             created TIMESTAMP,
             updated TIMESTAMP,
             PRIMARY KEY (id)

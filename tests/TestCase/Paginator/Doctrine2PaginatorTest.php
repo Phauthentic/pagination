@@ -16,21 +16,29 @@ namespace Phauthentic\Pagination\Test\TestCase\Paginator;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 use Phauthentic\Pagination\PaginationParams;
-use Phauthentic\Pagination\ParamsFactory\ServerRequestQueryParamsFactory;
-use Phauthentic\Pagination\RequestBasedPaginationService;
+use Phauthentic\Pagination\PaginationParamsInterface;
+use Phauthentic\Pagination\Paginator\Doctrine2Paginator;
+use Phauthentic\Pagination\Paginator\PaginatorInterface;
 use Phauthentic\Pagination\Test\TestCase\PaginationTestCase;
-use PHPUnit\Framework\TestCase;
 
+/**
+ * Users
+ *
+ * @Entity
+ * @Table(name="users")
+ */
 class Users
 {
     /**
-     * @var int
+     * @Id
+     * @Column(type="integer")
      */
-    protected $id;
+    private $id;
+
     /**
-     * @var string
+     * @Column(length=64)
      */
-    protected $username;
+    private $username;
 
     public function getId()
     {
@@ -54,17 +62,26 @@ class Users
 class Doctrine2PaginatorTest extends PaginationTestCase
 {
     /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    protected $entityManager;
+
+    /**
      * @inheritDoc
      */
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->markTestSkipped();
+        $isDevMode = true;
+        $config = Setup::createAnnotationMetadataConfiguration([__DIR__ . "/src"], $isDevMode);
 
-        if (!class_exists(Setup::class)) {
-             $this->markTestSkipped('Doctrine2 library was not found');
-        }
+        $conn = [
+            'driver' => 'pdo_sqlite',
+            'pdo' => $this->getPDO()
+        ];
+
+        $this->entityManager = EntityManager::create($conn, $config);
     }
 
     /**
@@ -74,16 +91,27 @@ class Doctrine2PaginatorTest extends PaginationTestCase
      */
     public function testPaginate(): void
     {
-        $isDevMode = true;
-        $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/src"), $isDevMode);
+        $repository = $this->entityManager->getRepository(Users::class);
 
-        $conn = [
-            'driver' => 'pdo_sqlite',
-            //'path' => __DIR__ . '/db.sqlite',
-        ];
+        $queryBuilder = $repository->createQueryBuilder('u');
+        $queryBuilder
+            ->select([
+                'u'
+            ]);
 
-        // obtaining the entity manager
-        $entityManager = EntityManager::create($conn, $config);
-        $query = $entityManager->find('Users', 1);
+        $adapter = new Doctrine2Paginator();
+        $params = (new PaginationParams())
+            ->setLimit(2)
+            ->setDirection(PaginationParams::DIRECTION_DESC)
+            ->setSortBy('u.username');
+
+        $results = $adapter->paginate($queryBuilder, $params);
+
+        $i = 0;
+        foreach ($results as $r) {
+            $i++;
+            $this->assertInstanceOf(Users::class, $r);
+        }
+        $this->assertEquals(2, $i);
     }
 }

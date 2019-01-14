@@ -13,8 +13,13 @@ declare(strict_types = 1);
  */
 namespace Phauthentic\Pagination\Paginator;
 
+use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
+use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Psr\Http\Message\ServerRequestInterface;
 use Phauthentic\Pagination\PaginationParamsInterface;
+use InvalidArgumentException;
 
 /**
  * PaginationToDoctrineRepositoryMapper
@@ -24,17 +29,41 @@ use Phauthentic\Pagination\PaginationParamsInterface;
 class Doctrine2Paginator implements PaginatorInterface
 {
     /**
+     *
+     */
+    public static $paginatorClass = Paginator::class;
+
+    /**
      * Maps the params to the repository
      *
-     * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Pagination params
      * @param mixed $repository
+     * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Pagination params
+     * @return \Doctrine\ORM\Tools\Pagination\Paginator
      */
     public function paginate($repository, PaginationParamsInterface $paginationParams)
     {
-        $query = $repository
-           ->setFirstResult($paginationParams->getCurrentPage())
-           ->setMaxResults($paginationParams->getLimit());
+        /** @var $repository \Doctrine\ORM\QueryBuilder */
+        if (!$repository instanceof ORMQueryBuilder
+            && !$repository instanceof DBALQueryBuilder
+        ) {
+            throw new InvalidArgumentException();
+        }
 
-        return new Paginator($query, $fetchJoinCollection = true);
+        $sortBy = $paginationParams->getSortBy();
+        if (!empty($sortBy)) {
+            $repository->addOrderBy(
+                $paginationParams->getSortBy(),
+                $paginationParams->getDirection()
+            );
+        }
+
+        $repository
+            ->setFirstResult($paginationParams->getOffset())
+            ->setMaxResults($paginationParams->getLimit());
+
+        $paginator = new self::$paginatorClass($repository, true);
+        $paginationParams->setCount($paginator->count());
+
+        return $paginator;
     }
 }
