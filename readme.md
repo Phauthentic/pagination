@@ -27,6 +27,12 @@ $service = new PaginationService(
     new ArrayPaginator()
 );
 
+$array = [
+	['username' => 'steven_hawking'],
+	['username' => 'leung_ting'],
+	// And more...
+]
+
 // Calls getPagingParams() internally and passes it to the mapper
 $resultSet = $service->paginate($array);
 ```
