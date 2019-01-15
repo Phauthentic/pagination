@@ -14,14 +14,8 @@ declare(strict_types = 1);
 namespace Phauthentic\Pagination\Test\TestCase\Paginator;
 
 use Envms\FluentPDO\Query;
-use Phauthentic\Pagination\Paginator\CakeOrmPaginator;
 use Phauthentic\Pagination\PaginationParams;
 use Phauthentic\Pagination\Paginator\FluentPdoPaginator;
-use Phauthentic\Pagination\ParamsFactory\ServerRequestQueryParamsFactory;
-use Phauthentic\Pagination\RequestBasedPaginationService;
-use Phauthentic\Pagination\Test\Fixture\FixtureInterface;
-use Phauthentic\Pagination\Test\Fixture\UsersFixture;
-use Phauthentic\Pagination\Test\TestCase\FixturizedTestCase;
 use Phauthentic\Pagination\Test\TestCase\PaginationTestCase;
 
 /**

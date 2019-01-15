@@ -17,11 +17,6 @@ use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
 use Phauthentic\Pagination\Paginator\CakeOrmPaginator;
 use Phauthentic\Pagination\PaginationParams;
-use Phauthentic\Pagination\ParamsFactory\ServerRequestQueryParamsFactory;
-use Phauthentic\Pagination\RequestBasedPaginationService;
-use Phauthentic\Pagination\Test\Fixture\FixtureInterface;
-use Phauthentic\Pagination\Test\Fixture\UsersFixture;
-use Phauthentic\Pagination\Test\TestCase\FixturizedTestCase;
 use Phauthentic\Pagination\Test\TestCase\PaginationTestCase;
 
 /**
