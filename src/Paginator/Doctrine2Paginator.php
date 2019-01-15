@@ -16,7 +16,6 @@ namespace Phauthentic\Pagination\Paginator;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Psr\Http\Message\ServerRequestInterface;
 use Phauthentic\Pagination\PaginationParamsInterface;
 use InvalidArgumentException;
 
