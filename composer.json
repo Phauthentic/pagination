@@ -1,5 +1,5 @@
 {
-  "name": "Phauthentic/pagination",
+  "name": "phauthentic/pagination",
   "type": "library",
   "description": "A framework and library agnostic data paginator",
   "keywords": ["pagination", "database", "array", "datasource", "paging", "agnostic"],
