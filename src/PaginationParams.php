@@ -121,6 +121,9 @@ class PaginationParams implements PaginationParamsInterface
         return $this->direction;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setSortBy(?string $sortBy): PaginationParamsInterface
     {
         $this->sortBy = $sortBy;
@@ -128,6 +131,9 @@ class PaginationParams implements PaginationParamsInterface
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getSortBy(): ?string
     {
         return $this->sortBy;

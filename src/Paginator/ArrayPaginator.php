@@ -27,7 +27,7 @@ class ArrayPaginator implements PaginatorInterface
      *
      * @var callable
      */
-     protected $sortHandler;
+    protected $sortHandler;
 
     /**
      * Maps the params to the repository

@@ -1,6 +1,8 @@
 {
-    "name": "phauthentic/pagination",
+  "name": "phauthentic/pagination",
     "type": "library",
+  "description": "A framework and library agnostic data paginator",
+  "keywords": ["pagination", "database", "array", "datasource", "paging", "agnostic"],
     "require": {
         "psr/http-message": "^1.0"
     },
@@ -19,7 +21,7 @@
             "name": "Florian Krämer"
         }
     ],
-    "minimum-stability": "dev",
+  "minimum-stability": "stable",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
@@ -30,5 +32,24 @@
         "psr-4": {
             "Phauthentic\\Pagination\\Test\\": "tests"
         }
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "git@github.com:Phauthentic/dbunit-fixture.git"
+    }
+  ],
+  "scripts": {
+      "check": [
+          "@cs-check",
+          "@test"
+      ],
+      "cs-check": "phpcs --colors -p src/ tests/",
+      "cs-fix": "phpcbf --colors src/ tests/",
+      "test": "phpunit",
+      "test-coverage": "phpunit --coverage-clover=clover.xml"
+  },
+  "config": {
+      "sort-packages": true
     }
 }

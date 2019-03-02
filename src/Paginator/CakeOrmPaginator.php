@@ -15,6 +15,7 @@ declare(strict_types = 1);
 namespace Phauthentic\Pagination\Paginator;
 
 use Cake\Datasource\QueryInterface;
+use InvalidArgumentException;
 use Phauthentic\Pagination\PaginationParamsInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -30,13 +31,20 @@ class CakeOrmPaginator implements PaginatorInterface
      * @param mixed $repository
      * @return mixed
      */
-    public function paginate($object, PaginationParamsInterface $paginationParams)
+    public function paginate($repository, PaginationParamsInterface $paginationParams)
     {
         /** @var \Cake\Database\Query $query */
         $query = null;
-        if ($object instanceof QueryInterface) {
-            $query = $object;
+        if ($repository instanceof QueryInterface) {
+            $query = $repository;
             $object = $query->getRepository();
+        } else {
+            $query = $repository->find();
+            $object = $repository;
+        }
+
+        if (!$query instanceof QueryInterface) {
+            throw new InvalidArgumentException();
         }
 
         $count = $query->count();

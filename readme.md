@@ -28,12 +28,18 @@ $service = new PaginationService(
     new ArrayPaginator()
 );
 
+$array = [
+	['username' => 'steven_hawking'],
+	['username' => 'leung_ting'],
+	// And more...
+]
+
 // Calls getPagingParams() internally and passes it to the mapper
 $resultSet = $service->paginate($array);
 ```
 
 ## Copyright & License
 
-Licensed under the [MIT license](LICENSE.txt).
+Licensed under the [MIT license](LICENSE.txt)
 
-* Copyright (c) [Phauthentic](https://github.com/Phauthentic)
+Copyright (c) [Phauthentic](https://github.com/Phauthentic)
