@@ -62,6 +62,13 @@ class PaginationParams implements PaginationParamsInterface
     protected $count = 0;
 
     /**
+     * Attributs
+     *
+     * @var array
+     */
+    protected $attributes = [];
+
+    /**
      * @inheritDoc
      */
     public function getCount(): int
@@ -259,6 +266,28 @@ class PaginationParams implements PaginationParamsInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function setAttribute(string $name, $value): self
+    {
+        $this->attributes[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAttribute(string $name)
+    {
+        if (isset($this->attributes[$name])) {
+            return $this->attributes[$name];
+        }
+
+        return null;
+    }
+
+    /**
      * Returns the current state of the object as array
      *
      * @return array
@@ -275,7 +304,8 @@ class PaginationParams implements PaginationParamsInterface
             'nextPage' => $this->getNextPage(),
             'previousPage' => $this->getPreviousPage(),
             'hasNextPage' => $this->hasNextPage(),
-            'hasPreviousPage' => $this->hasPreviousPage()
+            'hasPreviousPage' => $this->hasPreviousPage(),
+            'attributes' => $this->attributes
         ];
     }
 }
