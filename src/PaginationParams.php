@@ -274,7 +274,7 @@ class PaginationParams implements PaginationParamsInterface
     /**
      * @inheritDoc
      */
-    public function setAttribute(string $name, $value): self
+    public function addAttribute(string $name, $value): PaginationParamsInterface
     {
         $this->attributes[$name] = $value;
 
