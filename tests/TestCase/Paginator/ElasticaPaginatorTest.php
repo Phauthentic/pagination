@@ -17,6 +17,7 @@ use Elastica\Client;
 use Elastica\Document;
 use Elastica\Query;
 use Elastica\ResultSet;
+use Elastica\Type\Mapping;
 use Phauthentic\Pagination\PaginationParams;
 use Phauthentic\Pagination\Paginator\ElasticaPaginator;
 use Phauthentic\Pagination\ParamsFactory\ServerRequestQueryParamsFactory;
@@ -24,9 +25,9 @@ use Phauthentic\Pagination\RequestBasedPaginationService;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Doctrine 2 Adapter
+ * Elastica Paginator Test
  */
-class Doctrine2PaginatorTest extends TestCase
+class ElasticaPaginatorTest extends TestCase
 {
     protected $records = [
         [
@@ -47,9 +48,40 @@ class Doctrine2PaginatorTest extends TestCase
         ],
         [
             'id' => 5,
-            'name' => 'Evan Erics'
+            'name' => 'Eric Evans'
         ]
     ];
+
+    public function elasticSetup()
+    {
+        if (!class_exists(Client::class)) {
+            $this->markSkippedForMissingDependecy(Client::class);
+        }
+
+        $this->client = new Client([
+            'host' => 'localhost',
+            'port' => 9200
+        ]);
+
+        $this->index = $this->client->getIndex('pagination-test');
+        $this->index->create([], true);
+        $this->type = $this->index->getType('pagination-test');
+
+        $mapping = new Mapping();
+        $mapping->setType($this->type);
+        $mapping->setProperties([
+            'name' => [
+                'type' => 'keyword'
+            ]
+        ]);
+        $mapping->send();
+
+        foreach ($this->records as $record) {
+            $result = $this->type->addDocument(new Document($record['id'], $record));
+        }
+
+        sleep(5);
+    }
 
     /**
      * testPaginate
@@ -58,31 +90,49 @@ class Doctrine2PaginatorTest extends TestCase
      */
     public function testPaginate(): void
     {
-        if (!class_exists(Client::class)) {
-            $this->markSkippedForMissingDependecy(Client::class);
-        }
-
-        $client = new Client([
-            'host' => 'localhost',
-            'port' => 9200
-        ]);
-
-        $index = $client->getIndex('pagination-test');
-        $index->create([], true);
-        $type = $index->getType('pagination-test');
-
-        foreach ($this->records as $record) {
-            $result = $type->addDocument(new Document($record['id'], $record));
-        }
+        $this->elasticSetup();
 
         $query = new Query();
         $params = new PaginationParams();
         $params->setLimit(2);
-        $paginator = new ElasticaPaginator($type);
+        $paginator = new ElasticaPaginator($this->type);
 
         $result = $paginator->paginate($query, $params);
 
         $this->assertInstanceOf(ResultSet::class, $result);
-        $this->assertEquals(2, $result->getTotalHits());
+        $this->assertEquals(2, $result->count());
+    }
+
+    /**
+     * testPaginateWithSort
+     *
+     * @return void
+     */
+    public function testPaginateWithSort(): void
+    {
+        $this->elasticSetup();
+
+        $query = new Query();
+        $params = new PaginationParams();
+        $params
+            ->setLimit(5)
+            ->setSortBy('name');
+
+        $paginator = new ElasticaPaginator($this->type);
+
+        $result = $paginator->paginate($query, $params);
+
+        $results = $result->getResults();
+        $names = [];
+
+        foreach ($results as $result) {
+            $names[] = $result->getDocument()->get('name');
+        }
+
+        $expected = [
+            'Bob Martin', 'Eric Evans', 'Florian', 'Phauthentic', 'Robert'
+        ];
+
+        $this->assertEquals($expected, $names);
     }
 }

@@ -79,10 +79,18 @@ class ElasticaPaginator implements PaginatorInterface
         $query->setSize($paginationParams->getLimit());
         $query->setFrom($paginationParams->getOffset());
 
-        if ($this->orderMode === self::ORDER_ADD) {
-            //$query->setSort($paginationParams->getSortBy());
-        } else {
-            //$query->addSort($paginationParams->getSortBy());
+        $sortBy = $paginationParams->getSortBy();
+        if ($sortBy !== null) {
+            $sort = [
+                $paginationParams->getSortBy() => [
+                    'order' => $paginationParams->getDirection()
+                ]
+            ];
+            if ($this->orderMode === self::ORDER_ADD) {
+                $query->addSort($sort);
+            } else {
+                $query->setSort($sort);
+            }
         }
 
         $result = $this->type->search($query);
