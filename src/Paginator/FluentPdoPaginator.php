@@ -13,18 +13,17 @@ declare(strict_types = 1);
  */
 namespace Phauthentic\Pagination\Paginator;
 
-use Doctrine\ORM\QueryBuilder;
-use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
-use Doctrine\ORM\Tools\Pagination\Paginator;
+use Envms\FluentPDO\Query;
+use Envms\FluentPDO\Queries\Common;
 use Phauthentic\Pagination\PaginationParamsInterface;
 use InvalidArgumentException;
 
 /**
- * PaginationToDoctrineRepositoryMapper
+ * FluentPdoPaginator
  *
- * @link https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/tutorials/pagination.html
+ * @link https://github.com/envms/fluentpdo
  */
-class Doctrine2Paginator implements PaginatorInterface
+class FluentPdoPaginator implements PaginatorInterface
 {
     /**
      * The Doctrine Paginator Class
@@ -36,35 +35,33 @@ class Doctrine2Paginator implements PaginatorInterface
     /**
      * Maps the params to the repository
      *
-     * @param mixed $repository
+     * @throws \InvalidArgumentException
+     * @throws \Envms\FluentPDO\Exception
+     * @param \Envms\FluentPDO\Query $repository
      * @param \Phauthentic\Pagination\PaginationParamsInterface $paginationParams Pagination params
-     * @return \Doctrine\ORM\Tools\Pagination\Paginator
+     * @return \Envms\FluentPDO\Queries\Select
      */
     public function paginate($repository, PaginationParamsInterface $paginationParams)
     {
-        if (!$repository instanceof QueryBuilder) {
+        if (!$repository instanceof Common) {
             throw new InvalidArgumentException(sprintf(
-                'The $repository argument must be an instance of %s for this adapter',
-                QueryBuilder::class
+                '$repository must be an instance of %s',
+                Common::class
             ));
         }
 
-        /** @var $repository \Doctrine\ORM\QueryBuilder */
+        $countQuery = clone $repository;
+        $countQuery->select('COUNT(*) AS __count__');
+        $paginationParams->setCount((int)$countQuery->fetch()['__count__']);
+
+        /** @var $repository \Envms\FluentPDO\Query */
         $sortBy = $paginationParams->getSortBy();
-        if (!empty($sortBy)) {
-            $repository->addOrderBy(
-                $paginationParams->getSortBy(),
-                $paginationParams->getDirection()
-            );
+        if ($sortBy !== null) {
+            $repository->orderBy($sortBy . ' ' . $paginationParams->getDirection());
         }
 
-        $repository
-            ->setFirstResult($paginationParams->getOffset())
-            ->setMaxResults($paginationParams->getLimit());
-
-        $paginator = new self::$paginatorClass($repository, true);
-        $paginationParams->setCount($paginator->count());
-
-        return $paginator;
+        return $repository
+            ->limit($paginationParams->getLimit())
+            ->offset($paginationParams->getOffset());
     }
 }

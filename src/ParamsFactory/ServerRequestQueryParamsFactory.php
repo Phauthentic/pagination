@@ -19,7 +19,8 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Extracts the pagination information from a server requests query string
  */
-class ServerRequestQueryParamsFactory extends AbstractFactory {
+class ServerRequestQueryParamsFactory extends AbstractFactory
+{
 
     /**
      * Parameter map
@@ -138,7 +139,7 @@ class ServerRequestQueryParamsFactory extends AbstractFactory {
     public function build($data = null): PaginationParamsInterface
     {
         if (!$data instanceof ServerRequestInterface) {
-           return new static::$paginationParamsClass();
+            return new static::$paginationParamsClass();
         }
 
         return $this->mapRequest($data);

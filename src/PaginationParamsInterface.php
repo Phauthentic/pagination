@@ -18,8 +18,22 @@ namespace Phauthentic\Pagination;
  */
 interface PaginationParamsInterface
 {
-    public function setSortBy(?string $sortBy): PaginationParamsInterface;
+    const DIRECTION_ASC = 'asc';
+    const DIRECTION_DESC = 'desc';
 
+    /**
+     * Sets the field to sort by
+     *
+     * @param string $field
+     * @return $this
+     */
+    public function setSortBy(?string $field): PaginationParamsInterface;
+
+    /**
+     * Gets the field to sort by
+     *
+     * @return string
+     */
     public function getSortBy(): ?string;
 
     /**
