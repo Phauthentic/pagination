@@ -30,6 +30,6 @@ class Doctrine2PaginatorTest extends TestCase
      */
     public function testPaginate(): void
     {
-
+        // @todo
     }
 }
