@@ -18,7 +18,7 @@ It gets the information from the request object that must comply to [the PSR-7 s
 
 ## Documentation
 
- * [Paginators](./docs/Paginatos.md)
+ * [Paginators](./docs/Paginators.md)
    * [Array](./docs/Paginators.md#Array)
    * [CakePHP3 ORM](./docs/Paginators.md#Cake-ORM)
    * [Doctrine 2](./docs/Paginators.md#Doctrine-2)
