@@ -16,27 +16,14 @@ It gets the information from the request object that must comply to [the PSR-7 s
  * [Elastica](https://github.com/ruflin/elastica)
  * [FluentPDO](https://github.com/envms/fluentpdo)
 
-## How to use it
+## Documentation
 
-```php
-use Phauthentic\Pagination\PaginationService;
-use Phauthentic\Pagination\Paginator\ArrayPaginator;
-
-// Do this or use your favorite DI container to build the service
-$service = new PaginationService(
-    new PaginationParamsFactory(),
-    new ArrayPaginator()
-);
-
-$array = [
-	['username' => 'steven_hawking'],
-	['username' => 'leung_ting'],
-	// And more...
-]
-
-// Calls getPagingParams() internally and passes it to the mapper
-$resultSet = $service->paginate($array);
-```
+ * [Paginators](./docs/Paginatos.md)
+   * [Array](./docs/Paginators.md#Array)
+   * [CakePHP3 ORM](./docs/Paginators.md#Cake-ORM)
+   * [Doctrine 2](./docs/Paginators.md#Doctrine-2)
+   * [Elastica](./docs/Paginators.md#Elastica)
+ * [The Pagination Service](./docs/The-Pagination-Service.md)
 
 ## Copyright & License
 
