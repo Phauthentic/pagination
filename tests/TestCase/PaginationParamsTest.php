@@ -55,7 +55,8 @@ class PaginationParamsTest extends TestCase
             'hasNextPage' => false,
             'hasPreviousPage' => false,
             'direction' => 'asc',
-            'sortBy' => null
+            'sortBy' => null,
+            'attributes' => []
         ];
 
         $this->assertEquals($expected, $params->toArray());
