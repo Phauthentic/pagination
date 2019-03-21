@@ -141,4 +141,21 @@ interface PaginationParamsInterface
      * @return bool
      */
     public function hasNextPage(): bool;
+
+    /**
+     * Adds a custom attribute
+     *
+     * @param string $name Name
+     * @param mixed $value Value
+     * @return $this
+     */
+    public function addAttribute(string $name, $value): self;
+
+    /**
+     * Gets a custom attribute
+     *
+     * @param string $name Name
+     * @return mixed
+     */
+    public function getAttribute(string $name);
 }
