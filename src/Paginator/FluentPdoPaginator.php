@@ -51,7 +51,7 @@ class FluentPdoPaginator implements PaginatorInterface
         }
 
         $countQuery = clone $repository;
-        $countQuery->select('COUNT(*) AS __count__');
+        $countQuery->select('COUNT(*) AS __count__', true);
         $paginationParams->setCount((int)$countQuery->fetch()['__count__']);
 
         /** @var $repository \Envms\FluentPDO\Query */
